@@ -33,10 +33,9 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             StyleQTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    SplashScreen(
-                        message = "StyleQ",
-                        modifier = Modifier.padding(innerPadding)
+                SplashScreen(
+                    message = "StyleQ",
+                    modifier = Modifier.fillMaxSize()
                     )
                 }
             }
@@ -60,7 +59,9 @@ val Playfair_Display = FontFamily(
             Image(
                 painter = splashPainter,
                 contentDescription = null,
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop
+
             )
 
             Row(
@@ -90,4 +91,3 @@ fun GreetingPreview() {
     StyleQTheme {
         }
     }
-}
