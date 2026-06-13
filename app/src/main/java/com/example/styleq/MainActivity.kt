@@ -2,9 +2,11 @@ package com.example.styleq
 
 import android.graphics.drawable.Icon
 import android.os.Bundle
+import android.renderscript.Sampler
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -56,12 +58,15 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.TextField
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 
 class MainActivity : ComponentActivity() {
@@ -71,6 +76,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             StyleQTheme {
                 var currentPage by remember { mutableStateOf("splash") }
+                val interactionSource = remember { MutableInteractionSource() }
+
 
                 when (currentPage) {
                     "splash" -> {
@@ -87,17 +94,24 @@ class MainActivity : ComponentActivity() {
                                 currentPage = "login_screen"
                             },
                             onSignUpClick = {
-                                currentPage = "sign_up"
+                                currentPage = "create_account"
                             }
                         )
                     }
 
                     "login_screen" -> {
                         LoginScreen(
+                            message = "StyleQ",
+                            modifier = Modifier
+                            )
+                        }
 
-                        )
-                    }
-
+//                    "create_account" -> {
+//                        CreateAccount(
+//                            message = "StyleQ",
+//                            modifier = Modifier
+//                            )
+//                        }
                     }
                 }
             }
@@ -114,6 +128,10 @@ val Playfair_Display = FontFamily(
 )
 val InterFontFamily = FontFamily(
     Font(R.font.inter, FontWeight.Normal)
+)
+
+val RaleWayFontFamily = FontFamily(
+    Font(R.font.raleway_semibold)
 )
 
 @Composable
@@ -159,6 +177,7 @@ fun StyleQSplashScreen(message: String, modifier: Modifier = Modifier, onTimeout
 fun LoginSelectionScreen(
     onLoginClick: () -> Unit,
     onSignUpClick: () -> Unit) {
+
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
@@ -235,9 +254,13 @@ fun LoginSelectionScreen(
                     contentAlignment = Alignment.Center,
                     modifier = Modifier
                         .padding(top = 150.dp)
-                        .clickable {
+                        .clickable(
+                            indication = null,
+                            interactionSource = remember { MutableInteractionSource() }
+                        ) {
                             onSignUpClick()
                         }
+
                 ){
                     Image(
                         painter = painterResource(R.drawable.button_signup),
@@ -258,13 +281,37 @@ fun LoginSelectionScreen(
     }
 }
 
+@Composable
+fun OutlinedTextField(
+    @StringRes label: Int,
+    @DrawableRes leadingIcon : Int,
+    keyboardOptions: KeyboardOptions,
+    value: String,
+    onValueChange: (String) -> Unit,
+    modifier: Modifier = Modifier
+
+) {
+    OutlinedTextField(
+        value = value,
+        onValueChange = onValueChange,
+        leadingIcon = { Icon(painter = painterResource(id = leadingIcon),null )},
+        keyboardOptions = keyboardOptions,
+        modifier = Modifier.fillMaxWidth()
+    )
+}
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(
+    message: String,
+    modifier: Modifier = Modifier
+) {
+    var usernameInput by remember { mutableStateOf("") }
+    var emailInput by remember { mutableStateOf("") }
+    var passwordInput by remember { mutableStateOf("") }
 
     Box(
-        modifier = Modifier
-            .fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
     ) {
         Image(
             painter = painterResource(R.drawable.background),
@@ -272,13 +319,252 @@ fun LoginScreen() {
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop
         )
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+    }
+
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Top,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically
         ) {
+            Text(
+                text = "Style",
+                fontSize = 75.sp,
+                color = Color.White,
+                fontWeight = FontWeight.SemiBold,
+                fontFamily = Playfair_Display,
+                modifier = Modifier.padding(top = 100.dp)
+            )
+            Text(
+                text = "Q",
+                fontSize = 75.sp,
+                color = Color.Yellow,
+                fontWeight = FontWeight.SemiBold,
+                fontFamily = Playfair_Display,
+                modifier = Modifier.padding(top = 100.dp)
+            )
+        }
+    }
+
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Bottom,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+
+        Spacer(modifier = Modifier.height(275.dp))
+
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            Image(
+                painter = painterResource(R.drawable.card_login),
+                contentDescription = null,
+                modifier = Modifier.size(450.dp),
+                contentScale = ContentScale.Fit
+            )
+
+            Column(
+                modifier = Modifier
+                    .padding(bottom = 6.dp)
+                    .fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+
+                Text(
+                    text = "hello!",
+                    fontSize = 40.sp,
+                    color = Color(0xFF174C97),
+                    fontFamily = RaleWayFontFamily
+                )
+
+                Spacer(modifier = Modifier.height(1.dp))
+
+                OutlinedTextField(
+                    value = usernameInput,
+                    shape = RoundedCornerShape(100.dp),
+                    onValueChange = { usernameInput = it },
+                    label = { Text("Username") },
+                    singleLine = true,
+                    leadingIcon = {
+                        Icon(
+                            painter = painterResource(R.drawable.ic_person),
+                            contentDescription = null,
+                            modifier = Modifier.size(25.dp)
+                        )
+                    },
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        keyboardType = KeyboardType.Text,
+                        imeAction = ImeAction.Next
+                    ),
+                    modifier = Modifier.padding(horizontal = 80.dp)
+                )
+
+                Spacer(modifier = Modifier.height(1.dp))
+
+                OutlinedTextField(
+                    value = emailInput,
+                    shape = RoundedCornerShape(100.dp),
+                    onValueChange = { emailInput = it },
+                    label = { Text("Email") },
+                    singleLine = true,
+                    leadingIcon = {
+                        Icon(
+                            painter = painterResource(R.drawable.ic_email),
+                            contentDescription = null,
+                            modifier = Modifier.size(25.dp)
+                        )
+                    },
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        keyboardType = KeyboardType.Text,
+                        imeAction = ImeAction.Next
+                    ),
+                    modifier = Modifier
+                        .padding(horizontal = 80.dp)
+                )
+
+                Spacer(modifier = Modifier.height(1.dp))
+
+                OutlinedTextField(
+                    value = passwordInput,
+                    shape = RoundedCornerShape(100.dp),
+                    onValueChange = { passwordInput = it },
+                    label = { Text("Password") },
+                    singleLine = true,
+                    leadingIcon = {
+                        Icon(
+                            painter = painterResource(R.drawable.ic_password),
+                            contentDescription = null,
+                            modifier = Modifier.size(25.dp)
+                        )
+                    },
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        keyboardType = KeyboardType.Text,
+                        imeAction = ImeAction.Next
+                    ),
+                    modifier = Modifier
+                        .padding(horizontal = 80.dp)
+                )
+
+                Spacer(modifier = Modifier.height(2.dp))
+
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "forgot password?",
+                        fontSize = 10.sp,
+                        color = Color.Black,
+                        fontWeight = FontWeight.SemiBold,
+                        fontFamily = InterFontFamily,
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Button(
+                    onClick = { },
+                    contentPadding = PaddingValues(),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.Transparent
+                    ),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .padding(horizontal = 80.dp)
+                            .fillMaxWidth()
+                            .height(50.dp)
+                            .background(
+                                brush = Brush.horizontalGradient(
+                                    colors = listOf(
+                                        Color(0xFF005B96),
+                                        Color(0xFF011F4B)
+                                    )
+                                ),
+                                shape = RoundedCornerShape(100.dp)
+                            ),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = "Login",
+                            color = Color.White,
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.SemiBold
+                        )
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(3.dp))
+
+
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "or Login With",
+                        fontSize = 12.sp,
+                        color = Color.Black,
+                        fontWeight = FontWeight.SemiBold,
+                        fontFamily = InterFontFamily,
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(6.dp))
+
+                Image(
+                    painter = painterResource(R.drawable.ic_google),
+                    contentDescription = "Google Login",
+                    modifier = Modifier.size(26.dp)
+                )
+
+                Spacer(modifier = Modifier.height(6.dp))
+
+                Row {
+                    Text(
+                        text = "Don't have an account? ",
+                        fontSize = 12.sp,
+                        color = Color.Black,
+                        fontFamily = InterFontFamily
+                    )
+                    Text(
+                        text = "Register",
+                        fontSize = 12.sp,
+                        color = Color(0xFF174C97),
+                        fontWeight = FontWeight.SemiBold,
+                        fontFamily = InterFontFamily
+                    )
+                }
+            }
+        }
+    }
+
+    @Composable
+    fun CreateAccount(
+        message: String,
+        modifier: Modifier = Modifier
+
+    ) {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            Image(
+                painter = painterResource(R.drawable.background),
+                contentDescription = null,
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop
+            )
+        }
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -288,7 +574,7 @@ fun LoginScreen() {
                     color = Color.White,
                     fontWeight = FontWeight.SemiBold,
                     fontFamily = Playfair_Display,
-                    modifier = Modifier.padding(top = 120.dp)
+                    modifier = Modifier.padding(top = 280.dp)
                 )
                 Text(
                     text = "Q",
@@ -296,134 +582,92 @@ fun LoginScreen() {
                     color = Color.Yellow,
                     fontWeight = FontWeight.SemiBold,
                     fontFamily = Playfair_Display,
-                    modifier = Modifier.padding(top = 120.dp)
+                    modifier = Modifier.padding(top = 280.dp)
                 )
-            }
+                Spacer(modifier = Modifier.height(8.dp))
 
-            Spacer(modifier = Modifier.height(40.dp))
-
-            Card(
-                shape = RoundedCornerShape(62.dp),
-                colors = CardDefaults.cardColors(containerColor = Color.White),
-                modifier = Modifier.fillMaxWidth()
-            ) {
                 Column(
-                    modifier = Modifier.padding(16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(24.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
                 ) {
-                    Text(
-                        text = "hello!",
-                        color = Color(0xFF0D47A1),
-                        fontSize = 28.sp,
-                        fontWeight = FontWeight.Bold
-                    )
 
-                    Spacer(modifier = Modifier.height(16.dp))
+                    Text(
+                        text = "Create Account",
+                        fontSize = 24.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        color = Color.White
+                    )
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(
+                        text = "Create A New Account",
+                        fontSize = 16.sp,
+                        color = Color.White
+                    )
+                    Spacer(modifier = Modifier.height(24.dp))
+
 
                     OutlinedTextField(
-                        shape = RoundedCornerShape(100.dp),
                         value = "",
                         onValueChange = {},
                         label = { Text("Username") },
-                        leadingIcon = { Icon(Icons.Default.Person, contentDescription = null) },
                         modifier = Modifier.fillMaxWidth()
                     )
-
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.height(12.dp))
 
                     OutlinedTextField(
-                        shape = RoundedCornerShape(100.dp),
                         value = "",
                         onValueChange = {},
                         label = { Text("Email") },
-                        leadingIcon = { Icon(Icons.Default.Email, contentDescription = null) },
                         modifier = Modifier.fillMaxWidth()
                     )
-
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.height(12.dp))
 
                     OutlinedTextField(
-                        shape = RoundedCornerShape(100.dp),
+                        value = "",
+                        onValueChange = {},
+                        label = { Text("No Handphone") },
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    Spacer(modifier = Modifier.height(12.dp))
+
+                    OutlinedTextField(
                         value = "",
                         onValueChange = {},
                         label = { Text("Password") },
-                        leadingIcon = { Icon(Icons.Default.Lock, contentDescription = null) },
                         modifier = Modifier.fillMaxWidth(),
                         visualTransformation = PasswordVisualTransformation()
                     )
+                    Spacer(modifier = Modifier.height(12.dp))
 
-                    Spacer(modifier = Modifier.height(4.dp))
-
-                    Text(
-                        text = "forgot password?",
-                        color = Color.Gray,
-                        fontSize = 12.sp,
-                        modifier = Modifier.align(Alignment.End)
+                    OutlinedTextField(
+                        value = "",
+                        onValueChange = {},
+                        label = { Text("Confirm Password") },
+                        modifier = Modifier.fillMaxWidth(),
+                        visualTransformation = PasswordVisualTransformation()
                     )
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    Button(
-                        onClick = {  },
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = Color.Transparent
-                        ),
-                        contentPadding = PaddingValues(),
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .background(
-                                    brush = Brush.horizontalGradient(
-                                        colors = listOf(
-                                            Color(0xFF005B96),
-                                            Color(0xFF011F4B)
-                                        )
-                                    )
-                                )
-                                .fillMaxWidth()
-                                .padding(vertical = 12.dp),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text("Login", color = Color.White)
-                        }
-                    }
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    Text("or Login with")
-
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    IconButton(onClick = { /* TODO: Google login */ }) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_google),
-                            contentDescription = "Instagram",
-                            tint = Color.Unspecified,
-                            modifier = Modifier.size(32.dp)
-                        )
-                    }
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    Row {
-                        Text("Don't have an account?")
-                        Spacer(modifier = Modifier.width(4.dp))
-                        Text(
-                            text = "Register",
-                            color = Color(0xFF0D47A1),
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
+                    Spacer(modifier = Modifier.height(24.dp))
                 }
             }
         }
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    StyleQTheme {
+    @Preview(showBackground = true)
+    @Composable
+    fun GreetingPreview() {
+        StyleQTheme {
+            LoginScreen(
+                message = "StyleQ",
+                modifier = Modifier
+            )
+//            CreateAccount(
+//                message = "StyleQ",
+//                modifier = Modifier
+//            )
+        }
     }
-}
 
