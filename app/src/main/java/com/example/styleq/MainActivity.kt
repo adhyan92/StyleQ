@@ -72,6 +72,8 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.material3.RadioButton
+import androidx.compose.material3.RadioButtonDefaults
 
 
 class MainActivity : ComponentActivity() {
@@ -106,6 +108,9 @@ class MainActivity : ComponentActivity() {
 
                     "login_screen" -> {
                         LoginScreen(
+                            onLoginClick = {
+                                currentPage = "welcome_screen"
+                            },
                             message = " ",
                             modifier = Modifier
                         )
@@ -123,6 +128,26 @@ class MainActivity : ComponentActivity() {
 
                     "complete_profile" -> {
                         CompleteProfile(
+                            onCompleteProfileClick = {
+                                currentPage = "welcome_screen"
+                            },
+                            message = " ",
+                            modifier = Modifier
+                        )
+                    }
+
+                    "welcome_screen" -> {
+                        WelcomeScreen(
+                            onContinueClick = {
+                                currentPage = "deskripsi_screen1"
+                            },
+                            message = " ",
+                            modifier = Modifier
+                        )
+                    }
+
+                    "deskripsi_screen1" -> {
+                        DeskripsiScreen1(
                             message = " ",
                             modifier = Modifier
                         )
@@ -317,6 +342,7 @@ fun OutlinedTextField(
 
 @Composable
 fun LoginScreen(
+    onLoginClick: () -> Unit,
     message: String,
     modifier: Modifier = Modifier
 ) {
@@ -493,6 +519,12 @@ fun LoginScreen(
                             .padding(horizontal = 50.dp)
                             .fillMaxWidth()
                             .height(50.dp)
+                            .clickable(
+                                indication = null,
+                                interactionSource = remember { MutableInteractionSource() }
+                            ) {
+                                onLoginClick()
+                            }
                             .background(
                                 brush = Brush.horizontalGradient(
                                     colors = listOf(
@@ -791,7 +823,7 @@ fun CreateAccount(
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
-                            text = "Cretae Account",
+                            text = "Create Account",
                             color = Color.White,
                             fontSize = 20.sp,
                             fontWeight = FontWeight.SemiBold
@@ -819,11 +851,16 @@ fun CreateAccount(
     }
 }
 
+
+data class BodyTypeRadio(val name: String, val activeColor: Color)
+
 @Composable
 fun CompleteProfile(
+    onCompleteProfileClick: () -> Unit,
     message: String,
     modifier: Modifier = Modifier
 ) {
+
     val scrollState = rememberScrollState()
     var fullnameInput by remember { mutableStateOf("") }
     var genderInput by remember { mutableStateOf("") }
@@ -831,6 +868,17 @@ fun CompleteProfile(
     var weightInput by remember { mutableStateOf("") }
     var ageInput by remember { mutableStateOf("") }
     var locationInput by remember { mutableStateOf("") }
+    var selectedBodyType by remember { mutableStateOf("Pear") }
+    var selectedSkinTone by remember { mutableStateOf("Light") }
+
+
+    val bodyTypeOptions = listOf(
+        BodyTypeRadio("Rectangle", Color(0xFF3B9B85)),
+        BodyTypeRadio("Inverted", Color(0xFF2B72B9)),
+        BodyTypeRadio("Pear", Color(0xFF8E24AA)),
+        BodyTypeRadio("Hourglass", Color(0xFFC12757))
+    )
+    val skinToneOptions = listOf("Fair", "Light", "Medium", "Deep/Dark")
 
     Box(
         modifier = Modifier.fillMaxSize()
@@ -844,7 +892,7 @@ fun CompleteProfile(
 
         Column(
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxWidth()
                 .verticalScroll(scrollState)
                 .padding(top = 60.dp, bottom = 40.dp, start = 30.dp, end = 30.dp),
             verticalArrangement = Arrangement.Center,
@@ -858,8 +906,8 @@ fun CompleteProfile(
                 Image(
                     painter = painterResource(R.drawable.card_profile),
                     contentDescription = null,
-                    modifier = Modifier.fillMaxWidth(),
-                    contentScale = ContentScale.FillWidth
+                    modifier = Modifier.matchParentSize(),
+                    contentScale = ContentScale.FillBounds
                 )
 
                 Column(
@@ -883,7 +931,7 @@ fun CompleteProfile(
                             .padding(top = 20.dp, start = 16.dp, end = 16.dp)
                     )
 
-                    Spacer(modifier = Modifier.height(26.dp))
+                    Spacer(modifier = Modifier.height(50.dp))
 
                     Box(
                         modifier = Modifier
@@ -1080,20 +1128,197 @@ fun CompleteProfile(
                         }
                     }
 
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 3.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+
+                        Box(
+                            modifier = Modifier
+                                .wrapContentWidth()
+                                .padding(start = 5.dp, end = 12.dp),
+                            contentAlignment = Alignment.CenterStart
+                        ){
+                            Image(
+                                painter = painterResource(R.drawable.select_body),
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .width(200.dp)
+                                    .height(150.dp),
+                                contentScale = ContentScale.FillWidth
+                            )
+                        }
+
+                        Column(
+                            modifier = Modifier
+                                .weight(1f)
+                                .padding(end = 10.dp),
+                            verticalArrangement = Arrangement.spacedBy(3.dp)
+                        ) {
+                            bodyTypeOptions.forEach { option ->
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .clickable { selectedBodyType = option.name }
+                                        .padding(vertical = 2.dp),
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    RadioButton(
+                                        selected = (selectedBodyType == option.name),
+                                        onClick = { selectedBodyType = option.name },
+                                        colors = RadioButtonDefaults.colors(
+                                            selectedColor = option.activeColor,
+                                            unselectedColor = Color(0xFFD0D0D0)
+                                        ),
+                                        modifier = Modifier.size(12.dp)
+                                    )
+
+                                    Spacer(modifier = Modifier.width(8.dp))
+
+                                    Text(
+                                        text = option.name,
+                                        fontSize = 8.sp,
+                                        fontWeight = FontWeight.Medium,
+                                        color = Color.Black,
+                                        fontFamily = InterFontFamily
+                                    )
+                                }
+                            }
+                        }
+                    }
+
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
+                            .padding(top = 3.dp)
                             .padding(start = 5.dp, end = 24.dp),
                         contentAlignment = Alignment.CenterStart
-                    ){
+                    ) {
                         Image(
-                            painter = painterResource(R.drawable.select_body),
+                            painter = painterResource(R.drawable.shape1),
                             contentDescription = null,
                             modifier = Modifier
-                                .width(200.dp)
-                                .height(150.dp),
-                            contentScale = ContentScale.FillWidth
+                                .wrapContentWidth()
+                                .height(35.dp),
+                            contentScale = ContentScale.FillHeight
                         )
+                        Box(
+                            modifier = Modifier
+                                .height(35.dp)
+                                .padding(start = 18.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = "Select your skin tone",
+                                fontSize = 14.sp,
+                                color = Color.White,
+                                fontWeight = FontWeight.SemiBold,
+                                fontFamily = InterFontFamily,
+                            )
+                        }
+                    }
+
+                    Column(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .padding(top = 3.dp)
+                                .wrapContentWidth()
+                                .padding(start = 5.dp, end = 12.dp),
+                            contentAlignment = Alignment.CenterStart
+                        ) {
+                            Image(
+                                painter = painterResource(R.drawable.skin_tone),
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .width(400.dp)
+                                    .height(100.dp),
+                                contentScale = ContentScale.FillWidth
+                            )
+                        }
+
+                        Spacer(modifier = Modifier.height(6.dp))
+
+                        Row(
+                            modifier = Modifier
+                                .width(400.dp)
+                                .padding(start = 5.dp, end = 12.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            skinToneOptions.forEach { tone ->
+                                Column(
+                                    modifier = Modifier
+                                        .weight(1f)
+                                        .clickable { selectedSkinTone = tone }
+                                        .padding(vertical = 4.dp),
+                                    horizontalAlignment = Alignment.CenterHorizontally,
+                                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                                ) {
+                                    RadioButton(
+                                        selected = (selectedSkinTone == tone),
+                                        onClick = { selectedSkinTone = tone },
+                                        colors = RadioButtonDefaults.colors(
+                                            selectedColor = Color(0xFF2B72B9),
+                                            unselectedColor = Color(0xFFD0D0D0)
+                                        ),
+                                        modifier = Modifier.size(20.dp)
+                                    )
+
+                                    Text(
+                                        text = tone,
+                                        fontSize = 10.sp,
+                                        fontWeight = FontWeight.Medium,
+                                        color = Color.Black,
+                                        fontFamily = InterFontFamily
+                                    )
+                                }
+                            }
+                        }
+
+                        Spacer(modifier = Modifier.height(20.dp))
+
+                        Button(
+                            onClick = { },
+                            contentPadding = PaddingValues(),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color.Transparent
+                            ),
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .padding(horizontal = 10.dp)
+                                    .fillMaxWidth()
+                                    .clickable(
+                                        indication = null,
+                                        interactionSource = remember { MutableInteractionSource() }
+                                    ) {
+                                        onCompleteProfileClick()
+                                    }
+                                    .height(50.dp)
+                                    .background(
+                                        brush = Brush.horizontalGradient(
+                                            colors = listOf(
+                                                Color(0xFF005B96),
+                                                Color(0xFF011F4B)
+                                            )
+                                        ),
+                                        shape = RoundedCornerShape(100.dp)
+                                    ),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Text(
+                                    text = "Complete Account",
+                                    color = Color.White,
+                                    fontSize = 20.sp,
+                                    fontWeight = FontWeight.SemiBold
+                                )
+                            }
+                        }
                     }
                 }
             }
@@ -1101,13 +1326,136 @@ fun CompleteProfile(
     }
 }
 
+@Composable
+fun WelcomeScreen(
+    onContinueClick: () -> Unit,
+    message: String,
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Image(
+            painter = painterResource(R.drawable.background),
+            contentDescription = null,
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
+        )
+    }
 
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 200.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Text(
+            text = "Welcome Back\nTo",
+            fontSize = 32.sp,
+            color = Color.White,
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center,
+            lineHeight = 40.sp,
+            fontFamily = InterFontFamily,
+            modifier = Modifier
+                .fillMaxWidth()
+        )
+
+        Spacer(modifier = Modifier.height(4.dp))
+
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(
+                text = "Style",
+                fontSize = 75.sp,
+                color = Color.White,
+                fontWeight = FontWeight.SemiBold,
+                fontFamily = Playfair_Display,
+            )
+            Text(
+                text = "Q",
+                fontSize = 75.sp,
+                color = Color.Yellow,
+                fontWeight = FontWeight.SemiBold,
+                fontFamily = Playfair_Display,
+            )
+        }
+    }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(bottom = 150.dp),
+        verticalArrangement = Arrangement.Bottom,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier.clickable(
+                indication = null,
+                interactionSource = remember { MutableInteractionSource() }
+            ) {
+                onContinueClick()
+            }
+
+        ) {
+            Image(
+                painter = painterResource(R.drawable.button_continue),
+                contentDescription = null,
+                modifier = Modifier
+                    .size(200.dp),
+                contentScale = ContentScale.Fit
+            )
+        }
+    }
+}
+
+@Composable
+fun DeskripsiScreen1(
+    message: String,
+    modifier: Modifier = Modifier
+){
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Image(
+            painter = painterResource(R.drawable.background_deskripsi),
+            contentDescription = null,
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
+        )
+    }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(top = 120.dp, bottom = 100.dp, start = 50.dp, end = 50.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ){
+        Box(
+            modifier = Modifier
+                .fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            Image(
+                painter = painterResource(R.drawable.image_deskripsi),
+                contentDescription = null,
+                modifier = Modifier.matchParentSize(),
+                contentScale = ContentScale.FillBounds
+            )
+        }
+    }
+}
 
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     StyleQTheme {
         LoginScreen(
+            onLoginClick = { },
             message = " ",
             modifier = Modifier
         )
@@ -1117,6 +1465,16 @@ fun GreetingPreview() {
             modifier = Modifier
         )
         CompleteProfile(
+            onCompleteProfileClick = { },
+            message = " ",
+            modifier = Modifier
+        )
+        WelcomeScreen(
+            onContinueClick = { },
+            message = " ",
+            modifier = Modifier
+        )
+        DeskripsiScreen1(
             message = " ",
             modifier = Modifier
         )
