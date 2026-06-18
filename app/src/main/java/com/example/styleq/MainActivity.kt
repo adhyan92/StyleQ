@@ -45,6 +45,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -74,6 +75,9 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.RadioButtonDefaults
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 
 
 class MainActivity : ComponentActivity() {
@@ -1407,6 +1411,13 @@ fun WelcomeScreen(
                     .size(200.dp),
                 contentScale = ContentScale.Fit
             )
+            Text(
+                text = stringResource(R.string.Continue),
+                fontSize = 30.sp,
+                color = Color(0xFF174B96),
+                fontWeight = FontWeight.Bold,
+                fontFamily = InterFontFamily,
+            )
         }
     }
 }
@@ -1436,47 +1447,185 @@ fun DeskripsiScreen1(
         horizontalAlignment = Alignment.CenterHorizontally
     ){
         Box(
-            modifier = Modifier
-                .fillMaxSize(),
+            modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
             Image(
-                painter = painterResource(R.drawable.image_deskripsi),
+                painter = painterResource(R.drawable.image_deskripsi1),
                 contentDescription = null,
                 modifier = Modifier.matchParentSize(),
                 contentScale = ContentScale.FillBounds
+            )
+            Text(
+                text = "Hello",
+                fontSize = 30.sp,
+                color = Color.Black,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center,
+                fontFamily = RaleWayFontFamily,
+                modifier = Modifier
+                    .padding(top = 175.dp)
+            )
+            Text(
+                text = "StyleQ helps you discover\noutfits that match your\npersonality and lifestyle\ninstantly.",
+                fontSize = 16.sp,
+                color = Color.Black,
+                fontWeight = FontWeight.Light,
+                textAlign = TextAlign.Center,
+                lineHeight = 26.sp,
+                fontFamily = RaleWayFontFamily,
+                modifier = Modifier
+                    .padding(top = 375.dp)
             )
         }
     }
 }
 
-@Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
-    StyleQTheme {
-        LoginScreen(
-            onLoginClick = { },
-            message = " ",
-            modifier = Modifier
-        )
-        CreateAccount(
-            onCreatAccountClick = { },
-            message = " ",
-            modifier = Modifier
-        )
-        CompleteProfile(
-            onCompleteProfileClick = { },
-            message = " ",
-            modifier = Modifier
-        )
-        WelcomeScreen(
-            onContinueClick = { },
-            message = " ",
-            modifier = Modifier
-        )
-        DeskripsiScreen1(
-            message = " ",
-            modifier = Modifier
+fun DeskripsiScreen2(
+    message: String,
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Image(
+            painter = painterResource(R.drawable.background_deskripsi),
+            contentDescription = null,
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
         )
     }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(top = 120.dp, bottom = 100.dp, start = 50.dp, end = 50.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            Image(
+                painter = painterResource(R.drawable.image_deskripsi2),
+                contentDescription = null,
+                modifier = Modifier.matchParentSize(),
+                contentScale = ContentScale.FillBounds
+            )
+            Text(
+                text = "Explore",
+                fontSize = 30.sp,
+                color = Color.Black,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center,
+                fontFamily = RaleWayFontFamily,
+                modifier = Modifier
+                    .padding(top = 175.dp)
+            )
+            Text(
+                text = "Get personalized fashion\ntips, curated looks, and\nexclusive deals—all in one\nstylish app.",
+                fontSize = 16.sp,
+                color = Color.Black,
+                fontWeight = FontWeight.Light,
+                textAlign = TextAlign.Center,
+                lineHeight = 26.sp,
+                fontFamily = RaleWayFontFamily,
+                modifier = Modifier
+                    .padding(top = 375.dp)
+            )
+        }
+    }
 }
+
+@Composable
+fun DeskripsiScreen3(
+    message: String,
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Image(
+            painter = painterResource(R.drawable.background_deskripsi),
+            contentDescription = null,
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
+        )
+    }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(top = 120.dp, bottom = 100.dp, start = 50.dp, end = 50.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            Image(
+                painter = painterResource(R.drawable.image_deskripsi3),
+                contentDescription = null,
+                modifier = Modifier.matchParentSize(),
+                contentScale = ContentScale.FillBounds
+            )
+            Text(
+                text = "Ready?",
+                fontSize = 30.sp,
+                color = Color.Black,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center,
+                fontFamily = RaleWayFontFamily,
+                modifier = Modifier
+                    .padding(top = 175.dp)
+            )
+            Text(
+                text = "StyleQ is your smart fashion\nadvisor, guiding you to dress\nwith confidence every day.",
+                fontSize = 16.sp,
+                color = Color.Black,
+                fontWeight = FontWeight.Light,
+                textAlign = TextAlign.Center,
+                lineHeight = 26.sp,
+                fontFamily = RaleWayFontFamily,
+                modifier = Modifier
+                    .padding(top = 375.dp)
+            )
+        }
+    }
+}
+
+    @Preview(showBackground = true)
+    @Composable
+    fun GreetingPreview() {
+        StyleQTheme {
+            LoginScreen(
+                onLoginClick = { },
+                message = " ",
+                modifier = Modifier
+            )
+            CreateAccount(
+                onCreatAccountClick = { },
+                message = " ",
+                modifier = Modifier
+            )
+            CompleteProfile(
+                onCompleteProfileClick = { },
+                message = " ",
+                modifier = Modifier
+            )
+            WelcomeScreen(
+                onContinueClick = { },
+                message = " ",
+                modifier = Modifier
+            )
+            DeskripsiScreen1(
+                message = " ",
+                modifier = Modifier
+            )
+        }
+    }
