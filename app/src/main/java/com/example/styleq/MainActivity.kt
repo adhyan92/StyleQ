@@ -75,10 +75,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.RadioButtonDefaults
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.rememberPagerState
-
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -152,6 +148,36 @@ class MainActivity : ComponentActivity() {
 
                     "deskripsi_screen1" -> {
                         DeskripsiScreen1(
+                            onContinueClick = {
+                                currentPage = "deskripsi_screen2"
+                            },
+                            message = " ",
+                            modifier = Modifier
+                        )
+                    }
+
+                    "deskripsi_screen2" -> {
+                        DeskripsiScreen2(
+                            onContinueClick = {
+                                currentPage = "deskripsi_screen3"
+                            },
+                            message = " ",
+                            modifier = Modifier
+                        )
+                    }
+
+                    "deskripsi_screen3" -> {
+                        DeskripsiScreen3(
+                            onContinueClick = {
+                                currentPage = "upload_foto"
+                            },
+                            message = " ",
+                            modifier = Modifier
+                        )
+                    }
+
+                    "upload_foto" -> {
+                        UploadFoto(
                             message = " ",
                             modifier = Modifier
                         )
@@ -1424,124 +1450,254 @@ fun WelcomeScreen(
 
 @Composable
 fun DeskripsiScreen1(
+    onContinueClick: () -> Unit,
     message: String,
     modifier: Modifier = Modifier
 ){
     Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
+        modifier = Modifier.fillMaxSize()
     ) {
+
         Image(
             painter = painterResource(R.drawable.background_deskripsi),
             contentDescription = null,
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop
         )
-    }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(top = 120.dp, bottom = 100.dp, start = 50.dp, end = 50.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ){
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(
+                    top = 120.dp,
+                    bottom = 120.dp,
+                    start = 50.dp,
+                    end = 50.dp
+                ),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Image(
-                painter = painterResource(R.drawable.image_deskripsi1),
-                contentDescription = null,
-                modifier = Modifier.matchParentSize(),
-                contentScale = ContentScale.FillBounds
-            )
-            Text(
-                text = "Hello",
-                fontSize = 30.sp,
-                color = Color.Black,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center,
-                fontFamily = RaleWayFontFamily,
-                modifier = Modifier
-                    .padding(top = 175.dp)
-            )
-            Text(
-                text = "StyleQ helps you discover\noutfits that match your\npersonality and lifestyle\ninstantly.",
-                fontSize = 16.sp,
-                color = Color.Black,
-                fontWeight = FontWeight.Light,
-                textAlign = TextAlign.Center,
-                lineHeight = 26.sp,
-                fontFamily = RaleWayFontFamily,
-                modifier = Modifier
-                    .padding(top = 375.dp)
-            )
+
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+
+                Image(
+                    painter = painterResource(R.drawable.image_deskripsi1),
+                    contentDescription = null,
+                    modifier = Modifier.matchParentSize(),
+                    contentScale = ContentScale.FillBounds
+                )
+
+                Text(
+                    text = "Hello",
+                    fontSize = 30.sp,
+                    color = Color.Black,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center,
+                    fontFamily = RaleWayFontFamily,
+                    modifier = Modifier.padding(top = 175.dp)
+                )
+
+                Text(
+                    text = "StyleQ helps you discover\noutfits that match your\npersonality and lifestyle\ninstantly.",
+                    fontSize = 16.sp,
+                    color = Color.Black,
+                    fontWeight = FontWeight.Light,
+                    textAlign = TextAlign.Center,
+                    lineHeight = 26.sp,
+                    fontFamily = RaleWayFontFamily,
+                    modifier = Modifier.padding(top = 375.dp)
+                )
+            }
         }
+
+        Image(
+            painter = painterResource(R.drawable.ic_button_arrow),
+            contentDescription = null,
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(bottom = 30.dp)
+                .size(50.dp)
+                .clickable(
+                    indication = null,
+                    interactionSource = remember { MutableInteractionSource() }
+                ) {
+                    onContinueClick()
+                },
+            contentScale = ContentScale.Fit
+        )
     }
 }
 
 @Composable
 fun DeskripsiScreen2(
+    onContinueClick: () -> Unit,
     message: String,
     modifier: Modifier = Modifier
 ) {
     Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
+        modifier = Modifier.fillMaxSize()
     ) {
+
         Image(
             painter = painterResource(R.drawable.background_deskripsi),
             contentDescription = null,
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop
         )
-    }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(top = 120.dp, bottom = 100.dp, start = 50.dp, end = 50.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(
+                    top = 120.dp,
+                    bottom = 120.dp,
+                    start = 50.dp,
+                    end = 50.dp
+                ),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Image(
-                painter = painterResource(R.drawable.image_deskripsi2),
-                contentDescription = null,
-                modifier = Modifier.matchParentSize(),
-                contentScale = ContentScale.FillBounds
-            )
-            Text(
-                text = "Explore",
-                fontSize = 30.sp,
-                color = Color.Black,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center,
-                fontFamily = RaleWayFontFamily,
-                modifier = Modifier
-                    .padding(top = 175.dp)
-            )
-            Text(
-                text = "Get personalized fashion\ntips, curated looks, and\nexclusive deals—all in one\nstylish app.",
-                fontSize = 16.sp,
-                color = Color.Black,
-                fontWeight = FontWeight.Light,
-                textAlign = TextAlign.Center,
-                lineHeight = 26.sp,
-                fontFamily = RaleWayFontFamily,
-                modifier = Modifier
-                    .padding(top = 375.dp)
-            )
+
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+
+                Image(
+                    painter = painterResource(R.drawable.image_deskripsi2),
+                    contentDescription = null,
+                    modifier = Modifier.matchParentSize(),
+                    contentScale = ContentScale.FillBounds
+                )
+
+                Text(
+                    text = "Explore",
+                    fontSize = 30.sp,
+                    color = Color.Black,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center,
+                    fontFamily = RaleWayFontFamily,
+                    modifier = Modifier.padding(top = 175.dp)
+                )
+
+                Text(
+                    text = "Get personalized fashion\ntips, curated looks, and\nexclusive deals—all in one\nstylish app.",
+                    fontSize = 16.sp,
+                    color = Color.Black,
+                    fontWeight = FontWeight.Light,
+                    textAlign = TextAlign.Center,
+                    lineHeight = 26.sp,
+                    fontFamily = RaleWayFontFamily,
+                    modifier = Modifier.padding(top = 375.dp)
+                )
+            }
         }
+
+        Image(
+            painter = painterResource(R.drawable.ic_button_arrow),
+            contentDescription = null,
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(bottom = 30.dp)
+                .size(50.dp)
+                .clickable(
+                    indication = null,
+                    interactionSource = remember { MutableInteractionSource() }
+                ) {
+                    onContinueClick()
+                },
+            contentScale = ContentScale.Fit
+        )
     }
 }
 
 @Composable
 fun DeskripsiScreen3(
+    onContinueClick: () -> Unit,
+    message: String,
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier = Modifier.fillMaxSize()
+    ) {
+
+        Image(
+            painter = painterResource(R.drawable.background_deskripsi),
+            contentDescription = null,
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
+        )
+
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(
+                    top = 120.dp,
+                    bottom = 120.dp,
+                    start = 50.dp,
+                    end = 50.dp
+                ),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+
+                Image(
+                    painter = painterResource(R.drawable.image_deskripsi3),
+                    contentDescription = null,
+                    modifier = Modifier.matchParentSize(),
+                    contentScale = ContentScale.FillBounds
+                )
+
+                Text(
+                    text = "Ready?",
+                    fontSize = 30.sp,
+                    color = Color.Black,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center,
+                    fontFamily = RaleWayFontFamily,
+                    modifier = Modifier
+                        .padding(top = 175.dp)
+                )
+                Text(
+                    text = "StyleQ is your smart fashion\nadvisor, guiding you to dress\nwith confidence every day.",
+                    fontSize = 16.sp,
+                    color = Color.Black,
+                    fontWeight = FontWeight.Light,
+                    textAlign = TextAlign.Center,
+                    lineHeight = 26.sp,
+                    fontFamily = RaleWayFontFamily,
+                    modifier = Modifier
+                        .padding(top = 375.dp)
+                )
+            }
+        }
+        Image(
+            painter = painterResource(R.drawable.ic_button_arrow),
+            contentDescription = null,
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(bottom = 30.dp)
+                .size(50.dp)
+                .clickable(
+                    indication = null,
+                    interactionSource = remember { MutableInteractionSource() }
+                ) {
+                    onContinueClick()
+                },
+            contentScale = ContentScale.Fit
+        )
+    }
+}
+
+@Composable
+fun UploadFoto(
     message: String,
     modifier: Modifier = Modifier
 ) {
@@ -1550,52 +1706,54 @@ fun DeskripsiScreen3(
         contentAlignment = Alignment.Center
     ) {
         Image(
-            painter = painterResource(R.drawable.background_deskripsi),
+            painter = painterResource(R.drawable.background),
             contentDescription = null,
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop
         )
     }
-
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(top = 120.dp, bottom = 100.dp, start = 50.dp, end = 50.dp),
-        verticalArrangement = Arrangement.Center,
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
+        Row(
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Image(
-                painter = painterResource(R.drawable.image_deskripsi3),
-                contentDescription = null,
-                modifier = Modifier.matchParentSize(),
-                contentScale = ContentScale.FillBounds
+            Text(
+                text = "Style",
+                fontSize = 75.sp,
+                color = Color.White,
+                fontWeight = FontWeight.SemiBold,
+                fontFamily = Playfair_Display,
+                modifier = Modifier.padding(top = 100.dp)
             )
             Text(
-                text = "Ready?",
-                fontSize = 30.sp,
-                color = Color.Black,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center,
-                fontFamily = RaleWayFontFamily,
-                modifier = Modifier
-                    .padding(top = 175.dp)
-            )
-            Text(
-                text = "StyleQ is your smart fashion\nadvisor, guiding you to dress\nwith confidence every day.",
-                fontSize = 16.sp,
-                color = Color.Black,
-                fontWeight = FontWeight.Light,
-                textAlign = TextAlign.Center,
-                lineHeight = 26.sp,
-                fontFamily = RaleWayFontFamily,
-                modifier = Modifier
-                    .padding(top = 375.dp)
+                text = "Q",
+                fontSize = 75.sp,
+                color = Color.Yellow,
+                fontWeight = FontWeight.SemiBold,
+                fontFamily = Playfair_Display,
+                modifier = Modifier.padding(top = 100.dp)
             )
         }
+        Image(
+            painter = painterResource(R.drawable.foto_person),
+            contentDescription = null,
+            modifier = Modifier
+                .size(250.dp)
+                .padding(top = 40.dp),
+            contentScale = ContentScale.Fit
+        )
+
+        Image(
+            painter = painterResource(R.drawable.button_upload),
+            contentDescription = null,
+            modifier = Modifier
+                .size(250.dp)
+                .padding(top = 20.dp),
+            contentScale = ContentScale.Fit
+        )
     }
 }
 
@@ -1624,6 +1782,17 @@ fun DeskripsiScreen3(
                 modifier = Modifier
             )
             DeskripsiScreen1(
+                onContinueClick = { },
+                message = " ",
+                modifier = Modifier
+            )
+            DeskripsiScreen2(
+                onContinueClick = { },
+                message = " ",
+                modifier = Modifier
+            )
+            DeskripsiScreen3(
+                onContinueClick = { },
                 message = " ",
                 modifier = Modifier
             )
