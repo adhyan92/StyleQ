@@ -178,6 +178,9 @@ class MainActivity : ComponentActivity() {
 
                     "upload_foto" -> {
                         UploadFoto(
+                            onContinueClick = {
+                                currentPage = "upload_foto"
+                            },
                             message = " ",
                             modifier = Modifier
                         )
@@ -199,9 +202,11 @@ val Playfair_Display = FontFamily(
 val InterFontFamily = FontFamily(
     Font(R.font.inter, FontWeight.Normal)
 )
-
 val RaleWayFontFamily = FontFamily(
     Font(R.font.raleway_semibold)
+)
+val CrimsonFontFamily = FontFamily(
+    Font(R.font.crimson_regular)
 )
 
 @Composable
@@ -1698,6 +1703,7 @@ fun DeskripsiScreen3(
 
 @Composable
 fun UploadFoto(
+    onContinueClick: () -> Unit,
     message: String,
     modifier: Modifier = Modifier
 ) {
@@ -1742,7 +1748,7 @@ fun UploadFoto(
             contentDescription = null,
             modifier = Modifier
                 .size(250.dp)
-                .padding(top = 40.dp),
+                .padding(top = 20.dp),
             contentScale = ContentScale.Fit
         )
 
@@ -1751,9 +1757,58 @@ fun UploadFoto(
             contentDescription = null,
             modifier = Modifier
                 .size(250.dp)
-                .padding(top = 20.dp),
+                .padding(bottom = 180.dp),
             contentScale = ContentScale.Fit
         )
+    }
+
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Bottom,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ){
+        Text(
+            text = "Let your style shine",
+            fontSize = 18.sp,
+            color = Color.White,
+            modifier = Modifier
+                .padding(bottom = 290.dp),
+            fontWeight = FontWeight.Normal,
+            fontFamily = CrimsonFontFamily,
+        )
+    }
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(bottom = 40.dp),
+        verticalArrangement = Arrangement.Bottom,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ){
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier.clickable(
+                indication = null,
+                interactionSource = remember { MutableInteractionSource() }
+            ) {
+                onContinueClick()
+            }
+
+        ) {
+            Image(
+                painter = painterResource(R.drawable.button_continue),
+                contentDescription = null,
+                modifier = Modifier
+                    .size(200.dp),
+                contentScale = ContentScale.Fit
+            )
+            Text(
+                text = stringResource(R.string.Continue),
+                fontSize = 30.sp,
+                color = Color(0xFF174B96),
+                fontWeight = FontWeight.Bold,
+                fontFamily = InterFontFamily,
+            )
+        }
     }
 }
 
