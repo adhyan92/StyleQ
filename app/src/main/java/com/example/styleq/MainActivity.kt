@@ -75,6 +75,9 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.RadioButtonDefaults
+import android.widget.Toast
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.foundation.clickable
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -85,12 +88,9 @@ class MainActivity : ComponentActivity() {
                 var currentPage by remember { mutableStateOf("splash") }
                 val interactionSource = remember { MutableInteractionSource() }
 
-
                 when (currentPage) {
                     "splash" -> {
                         StyleQSplashScreen(
-                            message = "StyleQ",
-                            modifier = Modifier.fillMaxSize(),
                             onTimeout = { currentPage = "login_selection" }
                         )
                     }
@@ -110,9 +110,7 @@ class MainActivity : ComponentActivity() {
                         LoginScreen(
                             onLoginClick = {
                                 currentPage = "welcome_screen"
-                            },
-                            message = " ",
-                            modifier = Modifier
+                            }
                         )
                     }
 
@@ -120,9 +118,7 @@ class MainActivity : ComponentActivity() {
                         CreateAccount(
                             onCreatAccountClick = {
                                 currentPage = "complete_profile"
-                            },
-                            message = " ",
-                            modifier = Modifier
+                            }
                         )
                     }
 
@@ -130,9 +126,7 @@ class MainActivity : ComponentActivity() {
                         CompleteProfile(
                             onCompleteProfileClick = {
                                 currentPage = "welcome_screen"
-                            },
-                            message = " ",
-                            modifier = Modifier
+                            }
                         )
                     }
 
@@ -140,9 +134,7 @@ class MainActivity : ComponentActivity() {
                         WelcomeScreen(
                             onContinueClick = {
                                 currentPage = "deskripsi_screen1"
-                            },
-                            message = " ",
-                            modifier = Modifier
+                            }
                         )
                     }
 
@@ -150,9 +142,7 @@ class MainActivity : ComponentActivity() {
                         DeskripsiScreen1(
                             onContinueClick = {
                                 currentPage = "deskripsi_screen2"
-                            },
-                            message = " ",
-                            modifier = Modifier
+                            }
                         )
                     }
 
@@ -160,9 +150,7 @@ class MainActivity : ComponentActivity() {
                         DeskripsiScreen2(
                             onContinueClick = {
                                 currentPage = "deskripsi_screen3"
-                            },
-                            message = " ",
-                            modifier = Modifier
+                            }
                         )
                     }
 
@@ -170,20 +158,19 @@ class MainActivity : ComponentActivity() {
                         DeskripsiScreen3(
                             onContinueClick = {
                                 currentPage = "upload_foto"
-                            },
-                            message = " ",
-                            modifier = Modifier
+                            }
                         )
                     }
 
                     "upload_foto" -> {
                         UploadFoto(
                             onContinueClick = {
-                                currentPage = "upload_foto"
-                            },
-                            message = " ",
-                            modifier = Modifier
+                                currentPage = "ootd_selection"
+                            }
                         )
+                    }
+                    "ootd_selection" -> {
+                        OotdSelection( )
                     }
                 }
             }
@@ -210,7 +197,7 @@ val CrimsonFontFamily = FontFamily(
 )
 
 @Composable
-fun StyleQSplashScreen(message: String, modifier: Modifier = Modifier, onTimeout: () -> Unit) {
+fun StyleQSplashScreen(onTimeout: () -> Unit) {
     LaunchedEffect(Unit) {
         delay(4000)
         onTimeout()
@@ -378,8 +365,6 @@ fun OutlinedTextField(
 @Composable
 fun LoginScreen(
     onLoginClick: () -> Unit,
-    message: String,
-    modifier: Modifier = Modifier
 ) {
     var usernameInput by remember { mutableStateOf("") }
     var emailInput by remember { mutableStateOf("") }
@@ -628,8 +613,6 @@ fun LoginScreen(
 @Composable
 fun CreateAccount(
     onCreatAccountClick: () -> Unit,
-    message: String,
-    modifier: Modifier = Modifier
 ) {
     var usernameInput by remember { mutableStateOf("") }
     var emailInput by remember { mutableStateOf("") }
@@ -892,8 +875,6 @@ data class BodyTypeRadio(val name: String, val activeColor: Color)
 @Composable
 fun CompleteProfile(
     onCompleteProfileClick: () -> Unit,
-    message: String,
-    modifier: Modifier = Modifier
 ) {
 
     val scrollState = rememberScrollState()
@@ -1364,8 +1345,6 @@ fun CompleteProfile(
 @Composable
 fun WelcomeScreen(
     onContinueClick: () -> Unit,
-    message: String,
-    modifier: Modifier = Modifier
 ) {
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -1456,8 +1435,6 @@ fun WelcomeScreen(
 @Composable
 fun DeskripsiScreen1(
     onContinueClick: () -> Unit,
-    message: String,
-    modifier: Modifier = Modifier
 ){
     Box(
         modifier = Modifier.fillMaxSize()
@@ -1538,8 +1515,6 @@ fun DeskripsiScreen1(
 @Composable
 fun DeskripsiScreen2(
     onContinueClick: () -> Unit,
-    message: String,
-    modifier: Modifier = Modifier
 ) {
     Box(
         modifier = Modifier.fillMaxSize()
@@ -1621,8 +1596,6 @@ fun DeskripsiScreen2(
 @Composable
 fun DeskripsiScreen3(
     onContinueClick: () -> Unit,
-    message: String,
-    modifier: Modifier = Modifier
 ) {
     Box(
         modifier = Modifier.fillMaxSize()
@@ -1704,8 +1677,6 @@ fun DeskripsiScreen3(
 @Composable
 fun UploadFoto(
     onContinueClick: () -> Unit,
-    message: String,
-    modifier: Modifier = Modifier
 ) {
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -1752,14 +1723,49 @@ fun UploadFoto(
             contentScale = ContentScale.Fit
         )
 
-        Image(
-            painter = painterResource(R.drawable.button_upload),
-            contentDescription = null,
+        val context = LocalContext.current
+
+        Box(
             modifier = Modifier
-                .size(250.dp)
-                .padding(bottom = 180.dp),
-            contentScale = ContentScale.Fit
-        )
+                .padding(bottom = 300.dp)
+                .clickable {
+                    Toast.makeText(
+                        context,
+                        "Feature Coming Soon",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                },
+            contentAlignment = Alignment.Center
+        ) {
+            Image(
+                painter = painterResource(R.drawable.button_upload),
+                contentDescription = null,
+                modifier = Modifier.size(250.dp),
+                contentScale = ContentScale.Fit
+            )
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    text = "Upload Photo",
+                    fontSize = 28.sp,
+                    color = Color(0xFF174B96),
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = InterFontFamily
+                )
+
+                Spacer(modifier = Modifier.width(8.dp))
+
+                Icon(
+                    painter = painterResource(R.drawable.camera),
+                    contentDescription = null,
+                    tint = Color(0xFF174B96),
+                    modifier = Modifier.size(28.dp)
+                )
+            }
+        }
     }
 
     Column(
@@ -1812,44 +1818,271 @@ fun UploadFoto(
     }
 }
 
+@Composable
+fun OotdSelection(
+) {
+    Box(
+        modifier = Modifier.fillMaxSize()
+    ) {
+
+        Image(
+            painter = painterResource(R.drawable.background_ootd_color),
+            contentDescription = null,
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
+        )
+    }
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(
+                top = 80.dp,
+                bottom = 180.dp,
+                start = 50.dp,
+                end = 50.dp
+            ),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ){
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ){
+            Image(
+                painter = painterResource(R.drawable.card_ootd),
+                contentDescription = null,
+                modifier = Modifier.matchParentSize(),
+                contentScale = ContentScale.FillBounds
+            )
+            Text(
+                text = "Select Your\nSignature Look",
+                fontSize = 32.sp,
+                color = Color.White,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center,
+                fontFamily = InterFontFamily,
+                lineHeight = 40.sp,
+                modifier = Modifier
+                    .align(Alignment.TopCenter)
+                    .padding(top = 35.dp)
+            )
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 125.dp)
+            ) {
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceEvenly
+                ) {
+                    Box(
+                        modifier = Modifier.size(width = 75.dp, height = 100.dp)
+                    ) {
+                        Image(
+                            painter = painterResource(R.drawable.formal),
+                            contentDescription = null,
+                            modifier = Modifier.matchParentSize(),
+                            contentScale = ContentScale.Crop
+                        )
+
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(22.dp)
+                                .align(Alignment.TopCenter),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = "Formal",
+                                color = Color.White,
+                                fontSize = 12.sp,
+                                fontWeight = FontWeight.Bold,
+                                fontFamily = InterFontFamily
+                            )
+                        }
+                    }
+
+                    Box(
+                        modifier = Modifier.size(width = 75.dp, height = 100.dp)
+                    ) {
+                        Image(
+                            painter = painterResource(R.drawable.casual),
+                            contentDescription = null,
+                            modifier = Modifier.matchParentSize(),
+                            contentScale = ContentScale.Crop
+                        )
+
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(22.dp)
+                                .align(Alignment.TopCenter),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = "Casual",
+                                color = Color.White,
+                                fontSize = 12.sp,
+                                fontWeight = FontWeight.Bold,
+                                fontFamily = InterFontFamily
+                            )
+                        }
+                    }
+
+                    Box(
+                        modifier = Modifier.size(width = 75.dp, height = 100.dp)
+                    ) {
+                        Image(
+                            painter = painterResource(R.drawable.sporty),
+                            contentDescription = null,
+                            modifier = Modifier.matchParentSize(),
+                            contentScale = ContentScale.Crop
+                        )
+
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(22.dp)
+                                .align(Alignment.TopCenter),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = "Sporty",
+                                color = Color.White,
+                                fontSize = 12.sp,
+                                fontWeight = FontWeight.Bold,
+                                fontFamily = InterFontFamily
+                            )
+                        }
+                    }
+                }
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+
+                    Box(
+                        modifier = Modifier.size(width = 75.dp, height = 100.dp)
+                    ) {
+                        Image(
+                            painter = painterResource(R.drawable.retro),
+                            contentDescription = null,
+                            modifier = Modifier.matchParentSize(),
+                            contentScale = ContentScale.Crop
+                        )
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(22.dp)
+                                .align(Alignment.TopCenter),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = "Retro",
+                                color = Color.White,
+                                fontSize = 12.sp,
+                                fontWeight = FontWeight.Bold,
+                                fontFamily = InterFontFamily
+                            )
+                        }
+                    }
+
+                    Spacer(
+                        modifier = Modifier.width(90.dp)
+                    )
+
+                    Box(
+                        modifier = Modifier.size(width = 75.dp, height = 100.dp)
+                    ) {
+                        Image(
+                            painter = painterResource(R.drawable.clean),
+                            contentDescription = null,
+                            modifier = Modifier.matchParentSize(),
+                            contentScale = ContentScale.Crop
+                        )
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(22.dp)
+                                .align(Alignment.TopCenter),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = "Clean",
+                                color = Color.White,
+                                fontSize = 12.sp,
+                                fontWeight = FontWeight.Bold,
+                                fontFamily = InterFontFamily
+                            )
+                        }
+                    }
+                }
+            }
+            Image(
+                painter = painterResource(R.drawable.logo_styleq),
+                contentDescription = null,
+                modifier = Modifier
+                    .size(210.dp)
+                    .padding(top = 120.dp),
+                contentScale = ContentScale.Fit
+            )
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "Style",
+                    fontSize = 20.sp,
+                    color = Color.White,
+                    fontWeight = FontWeight.SemiBold,
+                    fontFamily = Playfair_Display,
+                    modifier = Modifier.padding(top = 120.dp)
+                )
+                Text(
+                    text = "Q",
+                    fontSize = 20.sp,
+                    color = Color.Yellow,
+                    fontWeight = FontWeight.SemiBold,
+                    fontFamily = Playfair_Display,
+                    modifier = Modifier.padding(top = 120.dp)
+                )
+            }
+        }
+    }
+}
+
+
+
     @Preview(showBackground = true)
     @Composable
     fun GreetingPreview() {
         StyleQTheme {
             LoginScreen(
-                onLoginClick = { },
-                message = " ",
-                modifier = Modifier
+                onLoginClick = { }
             )
             CreateAccount(
-                onCreatAccountClick = { },
-                message = " ",
-                modifier = Modifier
+                onCreatAccountClick = { }
             )
             CompleteProfile(
-                onCompleteProfileClick = { },
-                message = " ",
-                modifier = Modifier
+                onCompleteProfileClick = { }
             )
             WelcomeScreen(
-                onContinueClick = { },
-                message = " ",
-                modifier = Modifier
+                onContinueClick = { }
             )
             DeskripsiScreen1(
-                onContinueClick = { },
-                message = " ",
-                modifier = Modifier
+                onContinueClick = { }
             )
             DeskripsiScreen2(
-                onContinueClick = { },
-                message = " ",
-                modifier = Modifier
+                onContinueClick = { }
             )
             DeskripsiScreen3(
-                onContinueClick = { },
-                message = " ",
-                modifier = Modifier
+                onContinueClick = { }
             )
+            UploadFoto(
+                onContinueClick = { }
+            )
+            OotdSelection()
         }
     }
