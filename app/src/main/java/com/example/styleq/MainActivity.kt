@@ -60,6 +60,8 @@ import androidx.compose.material3.RadioButton
 import androidx.compose.material3.RadioButtonDefaults
 import android.widget.Toast
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -194,6 +196,9 @@ val RaleWayFontFamily = FontFamily(
 )
 val CrimsonFontFamily = FontFamily(
     Font(R.font.crimson_regular)
+)
+val NunitoSansFontFamily = FontFamily(
+    Font(R.font.nunito_sans)
 )
 
 @Composable
@@ -369,6 +374,8 @@ fun LoginScreen(
     var usernameInput by remember { mutableStateOf("") }
     var emailInput by remember { mutableStateOf("") }
     var passwordInput by remember { mutableStateOf("") }
+    var passwordVisible by remember { mutableStateOf(false) }
+    val context = LocalContext.current
 
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -495,6 +502,13 @@ fun LoginScreen(
                     onValueChange = { passwordInput = it },
                     label = { Text("Password") },
                     singleLine = true,
+
+                    visualTransformation =
+                        if (passwordVisible)
+                            VisualTransformation.None
+                        else
+                            PasswordVisualTransformation(),
+
                     leadingIcon = {
                         Icon(
                             painter = painterResource(R.drawable.ic_password),
@@ -502,26 +516,56 @@ fun LoginScreen(
                             modifier = Modifier.size(25.dp)
                         )
                     },
+
+                    trailingIcon = {
+                        Icon(
+                            painter = painterResource(
+                                if (passwordVisible)
+                                    R.drawable.icon_eye_close
+                                else
+                                    R.drawable.icon_eye_open
+                            ),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .size(25.dp)
+                                .clickable {
+                                    passwordVisible = !passwordVisible
+                                }
+                        )
+                    },
+
                     keyboardOptions = KeyboardOptions.Default.copy(
-                        keyboardType = KeyboardType.Text,
-                        imeAction = ImeAction.Next
+                        keyboardType = KeyboardType.Password,
+                        imeAction = ImeAction.Done
                     ),
-                    modifier = Modifier
-                        .padding(horizontal = 50.dp)
+
+                    modifier = Modifier.padding(horizontal = 50.dp)
                 )
 
                 Spacer(modifier = Modifier.height(2.dp))
 
-                Row(
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        text = "forgot password?",
-                        fontSize = 10.sp,
-                        color = Color.Black,
-                        fontWeight = FontWeight.SemiBold,
-                        fontFamily = InterFontFamily,
-                    )
+                Box(
+                    modifier = Modifier
+                        .clickable {
+                            Toast.makeText(
+                                context,
+                                "Feature Coming Soon",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        },
+                    contentAlignment = Alignment.Center
+                ){
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = "forgot password?",
+                            fontSize = 10.sp,
+                            color = Color.Black,
+                            fontWeight = FontWeight.SemiBold,
+                            fontFamily = InterFontFamily,
+                        )
+                    }
                 }
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -582,11 +626,23 @@ fun LoginScreen(
 
                 Spacer(modifier = Modifier.height(6.dp))
 
-                Image(
-                    painter = painterResource(R.drawable.ic_google),
-                    contentDescription = "Google Login",
-                    modifier = Modifier.size(26.dp)
-                )
+                Box(
+                    modifier = Modifier
+                        .clickable {
+                            Toast.makeText(
+                                context,
+                                "Feature Coming Soon",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        },
+                    contentAlignment = Alignment.Center
+                ){
+                    Image(
+                        painter = painterResource(R.drawable.ic_google),
+                        contentDescription = "Google Login",
+                        modifier = Modifier.size(26.dp)
+                    )
+                }
 
                 Spacer(modifier = Modifier.height(6.dp))
 
@@ -613,7 +669,9 @@ fun LoginScreen(
 @Composable
 fun CreateAccount(
     onCreatAccountClick: () -> Unit,
+
 ) {
+    var passwordVisible by remember { mutableStateOf(false) }
     var usernameInput by remember { mutableStateOf("") }
     var emailInput by remember { mutableStateOf("") }
     var numberhpInput by remember { mutableStateOf("") }
@@ -770,11 +828,34 @@ fun CreateAccount(
                     onValueChange = { passwordInput = it },
                     label = { Text("Password") },
                     singleLine = true,
+                    visualTransformation =
+                        if (passwordVisible)
+                            VisualTransformation.None
+                        else
+                            PasswordVisualTransformation(),
+
                     leadingIcon = {
                         Icon(
                             painter = painterResource(R.drawable.ic_password),
                             contentDescription = null,
-                            modifier = Modifier.size(22.dp)
+                            modifier = Modifier.size(25.dp)
+                        )
+                    },
+
+                    trailingIcon = {
+                        Icon(
+                            painter = painterResource(
+                                if (passwordVisible)
+                                    R.drawable.icon_eye_close
+                                else
+                                    R.drawable.icon_eye_open
+                            ),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .size(25.dp)
+                                .clickable {
+                                    passwordVisible = !passwordVisible
+                                }
                         )
                     },
                     keyboardOptions = KeyboardOptions.Default.copy(
@@ -790,13 +871,38 @@ fun CreateAccount(
                     value = confirmpasswordInput,
                     shape = RoundedCornerShape(100.dp),
                     onValueChange = { confirmpasswordInput = it },
-                    label = { Text("Confirm Password") },
+                    placeholder = {
+                        Text("Confirm Password")
+                    },
                     singleLine = true,
+                    visualTransformation =
+                        if (passwordVisible)
+                            VisualTransformation.None
+                        else
+                            PasswordVisualTransformation(),
+
                     leadingIcon = {
                         Icon(
                             painter = painterResource(R.drawable.ic_password),
                             contentDescription = null,
-                            modifier = Modifier.size(22.dp)
+                            modifier = Modifier.size(25.dp)
+                        )
+                    },
+
+                    trailingIcon = {
+                        Icon(
+                            painter = painterResource(
+                                if (passwordVisible)
+                                    R.drawable.icon_eye_close
+                                else
+                                    R.drawable.icon_eye_open
+                            ),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .size(25.dp)
+                                .clickable {
+                                    passwordVisible = !passwordVisible
+                                }
                         )
                     },
                     keyboardOptions = KeyboardOptions.Default.copy(
@@ -1488,7 +1594,7 @@ fun DeskripsiScreen1(
                     fontWeight = FontWeight.Light,
                     textAlign = TextAlign.Center,
                     lineHeight = 26.sp,
-                    fontFamily = RaleWayFontFamily,
+                    fontFamily = NunitoSansFontFamily,
                     modifier = Modifier.padding(top = 375.dp)
                 )
             }
@@ -1569,7 +1675,7 @@ fun DeskripsiScreen2(
                     fontWeight = FontWeight.Light,
                     textAlign = TextAlign.Center,
                     lineHeight = 26.sp,
-                    fontFamily = RaleWayFontFamily,
+                    fontFamily = NunitoSansFontFamily,
                     modifier = Modifier.padding(top = 375.dp)
                 )
             }
@@ -1650,7 +1756,7 @@ fun DeskripsiScreen3(
                     fontWeight = FontWeight.Light,
                     textAlign = TextAlign.Center,
                     lineHeight = 26.sp,
-                    fontFamily = RaleWayFontFamily,
+                    fontFamily = NunitoSansFontFamily,
                     modifier = Modifier
                         .padding(top = 375.dp)
                 )
@@ -1678,6 +1784,8 @@ fun DeskripsiScreen3(
 fun UploadFoto(
     onContinueClick: () -> Unit,
 ) {
+    val context = LocalContext.current
+
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
@@ -1722,8 +1830,6 @@ fun UploadFoto(
                 .padding(top = 20.dp),
             contentScale = ContentScale.Fit
         )
-
-        val context = LocalContext.current
 
         Box(
             modifier = Modifier
@@ -1822,6 +1928,9 @@ fun UploadFoto(
 fun OotdSelection(
     onContinueClick: () -> Unit
 ) {
+
+    val context = LocalContext.current
+
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -1873,14 +1982,25 @@ fun OotdSelection(
                     .padding(top = 110.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceEvenly,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Box(modifier = Modifier
-                        .size(width = 75.dp, height = 100.dp)) {
+                        .size(
+                            width = 75.dp,
+                            height = 100.dp
+                        )
+                        .clickable {
+                            Toast.makeText(
+                                context,
+                                "Feature Coming Soon",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        },
+                        contentAlignment = Alignment.Center
+                    ) {
                         Image(
                             painter = painterResource(R.drawable.formal),
                             contentDescription = null,
@@ -1905,7 +2025,19 @@ fun OotdSelection(
                     }
 
                     Box(modifier = Modifier
-                        .size(width = 75.dp, height = 100.dp)) {
+                        .size(
+                            width = 75.dp,
+                            height = 100.dp
+                        )
+                        .clickable {
+                            Toast.makeText(
+                                context,
+                                "Feature Coming Soon",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        },
+                        contentAlignment = Alignment.Center
+                    ) {
                         Image(
                             painter = painterResource(R.drawable.casual),
                             contentDescription = null,
@@ -1930,7 +2062,19 @@ fun OotdSelection(
                     }
 
                     Box(modifier = Modifier
-                        .size(width = 75.dp, height = 100.dp)) {
+                        .size(
+                            width = 75.dp,
+                            height = 100.dp
+                        )
+                        .clickable {
+                            Toast.makeText(
+                                context,
+                                "Feature Coming Soon",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        },
+                        contentAlignment = Alignment.Center
+                    ) {
                         Image(
                             painter = painterResource(R.drawable.sporty),
                             contentDescription = null,
@@ -1960,7 +2104,19 @@ fun OotdSelection(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Box(modifier = Modifier
-                        .size(width = 75.dp, height = 100.dp)) {
+                        .size(
+                            width = 75.dp,
+                            height = 100.dp
+                        )
+                        .clickable {
+                            Toast.makeText(
+                                context,
+                                "Feature Coming Soon",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        },
+                        contentAlignment = Alignment.Center
+                    ) {
                         Image(
                             painter = painterResource(R.drawable.retro),
                             contentDescription = null,
@@ -2012,7 +2168,19 @@ fun OotdSelection(
                         }
                     }
                     Box(modifier = Modifier
-                        .size(width = 75.dp, height = 100.dp)) {
+                        .size(
+                            width = 75.dp,
+                            height = 100.dp
+                        )
+                        .clickable {
+                            Toast.makeText(
+                                context,
+                                "Feature Coming Soon",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        },
+                        contentAlignment = Alignment.Center
+                    ) {
                         Image(
                             painter = painterResource(R.drawable.clean),
                             contentDescription = null,
@@ -2042,7 +2210,19 @@ fun OotdSelection(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Box(modifier = Modifier
-                        .size(width = 75.dp, height = 100.dp)) {
+                        .size(
+                            width = 75.dp,
+                            height = 100.dp
+                        )
+                        .clickable {
+                            Toast.makeText(
+                                context,
+                                "Feature Coming Soon",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        },
+                        contentAlignment = Alignment.Center
+                    ) {
                         Image(
                             painter = painterResource(R.drawable.batik),
                             contentDescription = null,
@@ -2067,7 +2247,19 @@ fun OotdSelection(
                     }
 
                     Box(modifier = Modifier
-                        .size(width = 75.dp, height = 100.dp)) {
+                        .size(
+                            width = 75.dp,
+                            height = 100.dp
+                        )
+                        .clickable {
+                            Toast.makeText(
+                                context,
+                                "Feature Coming Soon",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        },
+                        contentAlignment = Alignment.Center
+                    ) {
                         Image(
                             painter = painterResource(R.drawable.muslim),
                             contentDescription = null,
@@ -2092,7 +2284,19 @@ fun OotdSelection(
                     }
 
                     Box(modifier = Modifier
-                        .size(width = 75.dp, height = 100.dp)) {
+                        .size(
+                            width = 75.dp,
+                            height = 100.dp
+                        )
+                        .clickable {
+                            Toast.makeText(
+                                context,
+                                "Feature Coming Soon",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        },
+                        contentAlignment = Alignment.Center
+                    ) {
                         Image(
                             painter = painterResource(R.drawable.street),
                             contentDescription = null,
@@ -2158,6 +2362,8 @@ fun OotdSelection(
 fun ColorScreen(
     onContinueClick: () -> Unit
 ){
+    val context = LocalContext.current
+
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -2186,7 +2392,7 @@ fun ColorScreen(
             contentAlignment = Alignment.Center
         ){
             Image(
-                painter = painterResource(R.drawable.card_ootd),
+                painter = painterResource(R.drawable.card_color),
                 contentDescription = null,
                 modifier = Modifier.matchParentSize(),
                 contentScale = ContentScale.FillBounds
@@ -2216,7 +2422,19 @@ fun ColorScreen(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Box(modifier = Modifier
-                        .size(width = 75.dp, height = 100.dp)) {
+                        .size(
+                            width = 75.dp,
+                            height = 100.dp
+                        )
+                        .clickable {
+                            Toast.makeText(
+                                context,
+                                "Feature Coming Soon",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        },
+                        contentAlignment = Alignment.Center
+                    ) {
                         Image(
                             painter = painterResource(R.drawable.black),
                             contentDescription = null,
@@ -2241,7 +2459,19 @@ fun ColorScreen(
                     }
 
                     Box(modifier = Modifier
-                        .size(width = 75.dp, height = 100.dp)) {
+                        .size(
+                            width = 75.dp,
+                            height = 100.dp
+                        )
+                        .clickable {
+                            Toast.makeText(
+                                context,
+                                "Feature Coming Soon",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        },
+                        contentAlignment = Alignment.Center
+                    ) {
                         Image(
                             painter = painterResource(R.drawable.white),
                             contentDescription = null,
@@ -2266,7 +2496,19 @@ fun ColorScreen(
                     }
 
                     Box(modifier = Modifier
-                        .size(width = 75.dp, height = 100.dp)) {
+                        .size(
+                            width = 75.dp,
+                            height = 100.dp
+                        )
+                        .clickable {
+                            Toast.makeText(
+                                context,
+                                "Feature Coming Soon",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        },
+                        contentAlignment = Alignment.Center
+                    ) {
                         Image(
                             painter = painterResource(R.drawable.grey),
                             contentDescription = null,
@@ -2296,7 +2538,19 @@ fun ColorScreen(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Box(modifier = Modifier
-                        .size(width = 75.dp, height = 100.dp)) {
+                        .size(
+                            width = 75.dp,
+                            height = 100.dp
+                        )
+                        .clickable {
+                            Toast.makeText(
+                                context,
+                                "Feature Coming Soon",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        },
+                        contentAlignment = Alignment.Center
+                    ) {
                         Image(
                             painter = painterResource(R.drawable.beige),
                             contentDescription = null,
@@ -2348,7 +2602,19 @@ fun ColorScreen(
                         }
                     }
                     Box(modifier = Modifier
-                        .size(width = 75.dp, height = 100.dp)) {
+                        .size(
+                            width = 75.dp,
+                            height = 100.dp
+                        )
+                        .clickable {
+                            Toast.makeText(
+                                context,
+                                "Feature Coming Soon",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        },
+                        contentAlignment = Alignment.Center
+                    ) {
                         Image(
                             painter = painterResource(R.drawable.red),
                             contentDescription = null,
@@ -2378,7 +2644,19 @@ fun ColorScreen(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Box(modifier = Modifier
-                        .size(width = 75.dp, height = 100.dp)) {
+                        .size(
+                            width = 75.dp,
+                            height = 100.dp
+                        )
+                        .clickable {
+                            Toast.makeText(
+                                context,
+                                "Feature Coming Soon",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        },
+                        contentAlignment = Alignment.Center
+                    ) {
                         Image(
                             painter = painterResource(R.drawable.navy),
                             contentDescription = null,
@@ -2403,7 +2681,19 @@ fun ColorScreen(
                     }
 
                     Box(modifier = Modifier
-                        .size(width = 75.dp, height = 100.dp)) {
+                        .size(
+                            width = 75.dp,
+                            height = 100.dp
+                        )
+                        .clickable {
+                            Toast.makeText(
+                                context,
+                                "Feature Coming Soon",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        },
+                        contentAlignment = Alignment.Center
+                    ) {
                         Image(
                             painter = painterResource(R.drawable.olive),
                             contentDescription = null,
@@ -2428,7 +2718,19 @@ fun ColorScreen(
                     }
 
                     Box(modifier = Modifier
-                        .size(width = 75.dp, height = 100.dp)) {
+                        .size(
+                            width = 75.dp,
+                            height = 100.dp
+                        )
+                        .clickable {
+                            Toast.makeText(
+                                context,
+                                "Feature Coming Soon",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        },
+                        contentAlignment = Alignment.Center
+                    ) {
                         Image(
                             painter = painterResource(R.drawable.camel),
                             contentDescription = null,
