@@ -1,8 +1,6 @@
 package com.example.styleq
 
-import android.graphics.drawable.Icon
 import android.os.Bundle
-import android.renderscript.Sampler
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -13,7 +11,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -45,31 +42,17 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.TextField
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.ui.text.style.TextAlign
@@ -77,7 +60,6 @@ import androidx.compose.material3.RadioButton
 import androidx.compose.material3.RadioButtonDefaults
 import android.widget.Toast
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.foundation.clickable
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -170,7 +152,25 @@ class MainActivity : ComponentActivity() {
                         )
                     }
                     "ootd_selection" -> {
-                        OotdSelection( )
+                        OotdSelection(
+                            onContinueClick = {
+                                currentPage = "color_screen"
+                            }
+                        )
+                    }
+                    "color_screen" -> {
+                        ColorScreen(
+                            onContinueClick = {
+                                currentPage = "welcome_screen2"
+                            }
+                        )
+                    }
+                    "welcome_screen2" -> {
+                        Welcome_Screen2(
+                            onStartClick = {
+                                currentPage = " "
+                            }
+                        )
                     }
                 }
             }
@@ -1820,6 +1820,7 @@ fun UploadFoto(
 
 @Composable
 fun OotdSelection(
+    onContinueClick: () -> Unit
 ) {
     Box(
         modifier = Modifier.fillMaxSize()
@@ -1869,23 +1870,23 @@ fun OotdSelection(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 125.dp)
+                    .padding(top = 110.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceEvenly
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Box(
-                        modifier = Modifier.size(width = 75.dp, height = 100.dp)
-                    ) {
+                    Box(modifier = Modifier
+                        .size(width = 75.dp, height = 100.dp)) {
                         Image(
                             painter = painterResource(R.drawable.formal),
                             contentDescription = null,
                             modifier = Modifier.matchParentSize(),
                             contentScale = ContentScale.Crop
                         )
-
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -1903,16 +1904,14 @@ fun OotdSelection(
                         }
                     }
 
-                    Box(
-                        modifier = Modifier.size(width = 75.dp, height = 100.dp)
-                    ) {
+                    Box(modifier = Modifier
+                        .size(width = 75.dp, height = 100.dp)) {
                         Image(
                             painter = painterResource(R.drawable.casual),
                             contentDescription = null,
                             modifier = Modifier.matchParentSize(),
                             contentScale = ContentScale.Crop
                         )
-
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -1930,16 +1929,14 @@ fun OotdSelection(
                         }
                     }
 
-                    Box(
-                        modifier = Modifier.size(width = 75.dp, height = 100.dp)
-                    ) {
+                    Box(modifier = Modifier
+                        .size(width = 75.dp, height = 100.dp)) {
                         Image(
                             painter = painterResource(R.drawable.sporty),
                             contentDescription = null,
                             modifier = Modifier.matchParentSize(),
                             contentScale = ContentScale.Crop
                         )
-
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -1962,10 +1959,8 @@ fun OotdSelection(
                     horizontalArrangement = Arrangement.SpaceEvenly,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-
-                    Box(
-                        modifier = Modifier.size(width = 75.dp, height = 100.dp)
-                    ) {
+                    Box(modifier = Modifier
+                        .size(width = 75.dp, height = 100.dp)) {
                         Image(
                             painter = painterResource(R.drawable.retro),
                             contentDescription = null,
@@ -1988,14 +1983,36 @@ fun OotdSelection(
                             )
                         }
                     }
-
-                    Spacer(
-                        modifier = Modifier.width(90.dp)
-                    )
-
                     Box(
-                        modifier = Modifier.size(width = 75.dp, height = 100.dp)
+                        modifier = Modifier.size(80.dp),
+                        contentAlignment = Alignment.Center
                     ) {
+                        Image(
+                            painter = painterResource(R.drawable.logo_styleq),
+                            contentDescription = "Logo StyleQ",
+                            modifier = Modifier.matchParentSize()
+                        )
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = "Style",
+                                fontSize = 16.sp,
+                                color = Color.White,
+                                fontWeight = FontWeight.Bold,
+                                fontFamily = Playfair_Display
+                            )
+                            Text(
+                                text = "Q",
+                                fontSize = 16.sp,
+                                color = Color.Yellow,
+                                fontWeight = FontWeight.Bold,
+                                fontFamily = Playfair_Display
+                            )
+                        }
+                    }
+                    Box(modifier = Modifier
+                        .size(width = 75.dp, height = 100.dp)) {
                         Image(
                             painter = painterResource(R.drawable.clean),
                             contentDescription = null,
@@ -2019,41 +2036,587 @@ fun OotdSelection(
                         }
                     }
                 }
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Box(modifier = Modifier
+                        .size(width = 75.dp, height = 100.dp)) {
+                        Image(
+                            painter = painterResource(R.drawable.batik),
+                            contentDescription = null,
+                            modifier = Modifier.matchParentSize(),
+                            contentScale = ContentScale.Crop
+                        )
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(22.dp)
+                                .align(Alignment.TopCenter),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = "Batik",
+                                color = Color.White,
+                                fontSize = 12.sp,
+                                fontWeight = FontWeight.Bold,
+                                fontFamily = InterFontFamily
+                            )
+                        }
+                    }
+
+                    Box(modifier = Modifier
+                        .size(width = 75.dp, height = 100.dp)) {
+                        Image(
+                            painter = painterResource(R.drawable.muslim),
+                            contentDescription = null,
+                            modifier = Modifier.matchParentSize(),
+                            contentScale = ContentScale.Crop
+                        )
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(22.dp)
+                                .align(Alignment.TopCenter),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = "Muslim",
+                                color = Color.White,
+                                fontSize = 12.sp,
+                                fontWeight = FontWeight.Bold,
+                                fontFamily = InterFontFamily
+                            )
+                        }
+                    }
+
+                    Box(modifier = Modifier
+                        .size(width = 75.dp, height = 100.dp)) {
+                        Image(
+                            painter = painterResource(R.drawable.street),
+                            contentDescription = null,
+                            modifier = Modifier.matchParentSize(),
+                            contentScale = ContentScale.Crop
+                        )
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(22.dp)
+                                .align(Alignment.TopCenter),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = "Street",
+                                color = Color.White,
+                                fontSize = 12.sp,
+                                fontWeight = FontWeight.Bold,
+                                fontFamily = InterFontFamily
+                            )
+                        }
+                    }
+                }
             }
+        }
+    }
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(bottom = 20.dp),
+        verticalArrangement = Arrangement.Bottom,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier.clickable(
+                indication = null,
+                interactionSource = remember { MutableInteractionSource() }
+            ) {
+                onContinueClick()
+            }
+
+        ) {
             Image(
-                painter = painterResource(R.drawable.logo_styleq),
+                painter = painterResource(R.drawable.button_continue),
                 contentDescription = null,
                 modifier = Modifier
-                    .size(210.dp)
-                    .padding(top = 120.dp),
+                    .size(200.dp),
                 contentScale = ContentScale.Fit
             )
-
-            Row(
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = "Style",
-                    fontSize = 20.sp,
-                    color = Color.White,
-                    fontWeight = FontWeight.SemiBold,
-                    fontFamily = Playfair_Display,
-                    modifier = Modifier.padding(top = 120.dp)
-                )
-                Text(
-                    text = "Q",
-                    fontSize = 20.sp,
-                    color = Color.Yellow,
-                    fontWeight = FontWeight.SemiBold,
-                    fontFamily = Playfair_Display,
-                    modifier = Modifier.padding(top = 120.dp)
-                )
-            }
+            Text(
+                text = stringResource(R.string.Continue),
+                fontSize = 30.sp,
+                color = Color(0xFF174B96),
+                fontWeight = FontWeight.Bold,
+                fontFamily = InterFontFamily,
+            )
         }
     }
 }
 
+@Composable
+fun ColorScreen(
+    onContinueClick: () -> Unit
+){
+    Box(
+        modifier = Modifier.fillMaxSize()
+    ) {
 
+        Image(
+            painter = painterResource(R.drawable.background_ootd_color),
+            contentDescription = null,
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
+        )
+    }
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(
+                top = 80.dp,
+                bottom = 180.dp,
+                start = 50.dp,
+                end = 50.dp
+            ),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ){
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ){
+            Image(
+                painter = painterResource(R.drawable.card_ootd),
+                contentDescription = null,
+                modifier = Modifier.matchParentSize(),
+                contentScale = ContentScale.FillBounds
+            )
+            Text(
+                text = "Select Your\nColor Look",
+                fontSize = 32.sp,
+                color = Color.White,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center,
+                fontFamily = InterFontFamily,
+                lineHeight = 40.sp,
+                modifier = Modifier
+                    .align(Alignment.TopCenter)
+                    .padding(top = 35.dp)
+            )
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 110.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Box(modifier = Modifier
+                        .size(width = 75.dp, height = 100.dp)) {
+                        Image(
+                            painter = painterResource(R.drawable.black),
+                            contentDescription = null,
+                            modifier = Modifier.matchParentSize(),
+                            contentScale = ContentScale.Crop
+                        )
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(22.dp)
+                                .align(Alignment.TopCenter),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = "Hitam",
+                                color = Color.White,
+                                fontSize = 12.sp,
+                                fontWeight = FontWeight.Bold,
+                                fontFamily = InterFontFamily
+                            )
+                        }
+                    }
+
+                    Box(modifier = Modifier
+                        .size(width = 75.dp, height = 100.dp)) {
+                        Image(
+                            painter = painterResource(R.drawable.white),
+                            contentDescription = null,
+                            modifier = Modifier.matchParentSize(),
+                            contentScale = ContentScale.Crop
+                        )
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(22.dp)
+                                .align(Alignment.TopCenter),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = "White",
+                                color = Color.White,
+                                fontSize = 12.sp,
+                                fontWeight = FontWeight.Bold,
+                                fontFamily = InterFontFamily
+                            )
+                        }
+                    }
+
+                    Box(modifier = Modifier
+                        .size(width = 75.dp, height = 100.dp)) {
+                        Image(
+                            painter = painterResource(R.drawable.grey),
+                            contentDescription = null,
+                            modifier = Modifier.matchParentSize(),
+                            contentScale = ContentScale.Crop
+                        )
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(22.dp)
+                                .align(Alignment.TopCenter),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = "Grey",
+                                color = Color.White,
+                                fontSize = 12.sp,
+                                fontWeight = FontWeight.Bold,
+                                fontFamily = InterFontFamily
+                            )
+                        }
+                    }
+                }
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Box(modifier = Modifier
+                        .size(width = 75.dp, height = 100.dp)) {
+                        Image(
+                            painter = painterResource(R.drawable.beige),
+                            contentDescription = null,
+                            modifier = Modifier.matchParentSize(),
+                            contentScale = ContentScale.Crop
+                        )
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(22.dp)
+                                .align(Alignment.TopCenter),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = "Beige",
+                                color = Color.White,
+                                fontSize = 12.sp,
+                                fontWeight = FontWeight.Bold,
+                                fontFamily = InterFontFamily
+                            )
+                        }
+                    }
+                    Box(
+                        modifier = Modifier.size(80.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Image(
+                            painter = painterResource(R.drawable.logo_styleq),
+                            contentDescription = "Logo StyleQ",
+                            modifier = Modifier.matchParentSize()
+                        )
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = "Style",
+                                fontSize = 16.sp,
+                                color = Color.White,
+                                fontWeight = FontWeight.Bold,
+                                fontFamily = Playfair_Display
+                            )
+                            Text(
+                                text = "Q",
+                                fontSize = 16.sp,
+                                color = Color.Yellow,
+                                fontWeight = FontWeight.Bold,
+                                fontFamily = Playfair_Display
+                            )
+                        }
+                    }
+                    Box(modifier = Modifier
+                        .size(width = 75.dp, height = 100.dp)) {
+                        Image(
+                            painter = painterResource(R.drawable.red),
+                            contentDescription = null,
+                            modifier = Modifier.matchParentSize(),
+                            contentScale = ContentScale.Crop
+                        )
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(22.dp)
+                                .align(Alignment.TopCenter),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = "Red",
+                                color = Color.White,
+                                fontSize = 12.sp,
+                                fontWeight = FontWeight.Bold,
+                                fontFamily = InterFontFamily
+                            )
+                        }
+                    }
+                }
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Box(modifier = Modifier
+                        .size(width = 75.dp, height = 100.dp)) {
+                        Image(
+                            painter = painterResource(R.drawable.navy),
+                            contentDescription = null,
+                            modifier = Modifier.matchParentSize(),
+                            contentScale = ContentScale.Crop
+                        )
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(22.dp)
+                                .align(Alignment.TopCenter),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = "Navy",
+                                color = Color.White,
+                                fontSize = 12.sp,
+                                fontWeight = FontWeight.Bold,
+                                fontFamily = InterFontFamily
+                            )
+                        }
+                    }
+
+                    Box(modifier = Modifier
+                        .size(width = 75.dp, height = 100.dp)) {
+                        Image(
+                            painter = painterResource(R.drawable.olive),
+                            contentDescription = null,
+                            modifier = Modifier.matchParentSize(),
+                            contentScale = ContentScale.Crop
+                        )
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(22.dp)
+                                .align(Alignment.TopCenter),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = "Olive",
+                                color = Color.White,
+                                fontSize = 12.sp,
+                                fontWeight = FontWeight.Bold,
+                                fontFamily = InterFontFamily
+                            )
+                        }
+                    }
+
+                    Box(modifier = Modifier
+                        .size(width = 75.dp, height = 100.dp)) {
+                        Image(
+                            painter = painterResource(R.drawable.camel),
+                            contentDescription = null,
+                            modifier = Modifier.matchParentSize(),
+                            contentScale = ContentScale.Crop
+                        )
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(22.dp)
+                                .align(Alignment.TopCenter),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = "Camel",
+                                color = Color.White,
+                                fontSize = 12.sp,
+                                fontWeight = FontWeight.Bold,
+                                fontFamily = InterFontFamily
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(bottom = 20.dp),
+        verticalArrangement = Arrangement.Bottom,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier.clickable(
+                indication = null,
+                interactionSource = remember { MutableInteractionSource() }
+            ) {
+                onContinueClick()
+            }
+
+        ) {
+            Image(
+                painter = painterResource(R.drawable.button_continue),
+                contentDescription = null,
+                modifier = Modifier
+                    .size(200.dp),
+                contentScale = ContentScale.Fit
+            )
+            Text(
+                text = stringResource(R.string.Continue),
+                fontSize = 30.sp,
+                color = Color(0xFF174B96),
+                fontWeight = FontWeight.Bold,
+                fontFamily = InterFontFamily,
+            )
+        }
+    }
+}
+
+@Composable
+fun Welcome_Screen2(
+    onStartClick : () -> Unit
+){
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Image(
+            painter = painterResource(R.drawable.background),
+            contentDescription = null,
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
+        )
+    }
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Top,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = "Style",
+                fontSize = 75.sp,
+                color = Color.White,
+                fontWeight = FontWeight.SemiBold,
+                fontFamily = Playfair_Display,
+                modifier = Modifier.padding(top = 100.dp)
+            )
+            Text(
+                text = "Q",
+                fontSize = 75.sp,
+                color = Color.Yellow,
+                fontWeight = FontWeight.SemiBold,
+                fontFamily = Playfair_Display,
+                modifier = Modifier.padding(top = 100.dp)
+            )
+        }
+        Image(
+            painter = painterResource(R.drawable.foto_person),
+            contentDescription = null,
+            modifier = Modifier
+                .size(250.dp)
+                .padding(top = 20.dp),
+            contentScale = ContentScale.Fit
+        )
+
+        Box(
+            modifier = Modifier
+                .padding(top = 20.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    text = "Hi, Shinta",
+                    fontSize = 28.sp,
+                    color = Color.White,
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = InterFontFamily
+                )
+
+                Spacer(modifier = Modifier.width(8.dp))
+
+                Icon(
+                    painter = painterResource(R.drawable.hand_welcome),
+                    contentDescription = null,
+                    tint = Color.White,
+                    modifier = Modifier.size(28.dp)
+                )
+            }
+        }
+    }
+
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Bottom,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ){
+        Text(
+            text = "Define Your Fashion Journey",
+            fontSize = 18.sp,
+            color = Color.White,
+            modifier = Modifier
+                .padding(bottom = 290.dp),
+            fontWeight = FontWeight.Normal,
+            fontFamily = CrimsonFontFamily,
+        )
+    }
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(bottom = 40.dp),
+        verticalArrangement = Arrangement.Bottom,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ){
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier.clickable(
+                indication = null,
+                interactionSource = remember { MutableInteractionSource() }
+            ) {
+                onStartClick()
+            }
+
+        ) {
+            Image(
+                painter = painterResource(R.drawable.button_start),
+                contentDescription = null,
+                modifier = Modifier
+                    .size(200.dp),
+                contentScale = ContentScale.Fit
+            )
+            Text(
+                text = stringResource(R.string.Lets_Start),
+                fontSize = 30.sp,
+                color = Color(0xFF174B96),
+                fontWeight = FontWeight.Bold,
+                fontFamily = InterFontFamily,
+            )
+        }
+    }
+}
 
     @Preview(showBackground = true)
     @Composable
@@ -2083,6 +2646,14 @@ fun OotdSelection(
             UploadFoto(
                 onContinueClick = { }
             )
-            OotdSelection()
+            OotdSelection(
+                onContinueClick = { }
+            )
+            ColorScreen(
+                onContinueClick = { }
+            )
+            Welcome_Screen2 (
+                onStartClick = { }
+            )
         }
     }
