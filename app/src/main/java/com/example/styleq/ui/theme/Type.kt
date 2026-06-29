@@ -2,11 +2,30 @@ package com.example.styleq.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.example.styleq.R
 
 // Set of Material typography styles to start with
+
+val Playfair_Display = FontFamily(
+    Font(R.font.playfair_display)
+)
+val InterFontFamily = FontFamily(
+    Font(R.font.inter, FontWeight.Normal)
+)
+val RaleWayFontFamily = FontFamily(
+    Font(R.font.raleway_semibold)
+)
+val CrimsonFontFamily = FontFamily(
+    Font(R.font.crimson_regular)
+)
+val NunitoSansFontFamily = FontFamily(
+    Font(R.font.nunito_sans)
+)
+
 val Typography = Typography(
     bodyLarge = TextStyle(
         fontFamily = FontFamily.Default,
