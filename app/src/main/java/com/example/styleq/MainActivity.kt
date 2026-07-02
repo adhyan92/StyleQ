@@ -65,6 +65,8 @@ import androidx.compose.ui.text.input.VisualTransformation
 import com.example.styleq.viewmodel.ProfileViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.styleq.data.BodyTypeRadio
+import com.example.styleq.ui.theme.solidTextFieldColors
+import com.example.styleq.ui.theme.ResponsiveScale
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,7 +75,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             StyleQTheme {
                 val interactionSource = remember { MutableInteractionSource() }
+                ResponsiveScale {
                     StyleQApp()
+                    }
                 }
             }
         }
@@ -261,14 +265,14 @@ class MainActivity : ComponentActivity() {
             ) {
                 Text(
                     text = "Style",
-                    fontSize = 75.sp,
+                    fontSize = 96.sp,
                     color = Color.White,
                     fontWeight = FontWeight.SemiBold,
                     fontFamily = Playfair_Display
                 )
                 Text(
                     text = "Q",
-                    fontSize = 75.sp,
+                    fontSize = 96.sp,
                     color = Color.Yellow,
                     fontWeight = FontWeight.SemiBold,
                     fontFamily = Playfair_Display
@@ -307,7 +311,7 @@ class MainActivity : ComponentActivity() {
             ) {
                 Text(
                     text = "Style",
-                    fontSize = 75.sp,
+                    fontSize = 96.sp,
                     color = Color.White,
                     fontWeight = FontWeight.SemiBold,
                     fontFamily = Playfair_Display,
@@ -332,56 +336,59 @@ class MainActivity : ComponentActivity() {
             ) {
 
                 Box(
-                    contentAlignment = Alignment.Center,
                     modifier = Modifier.clickable(
                         indication = null,
                         interactionSource = remember { MutableInteractionSource() }
                     ) {
                         onLoginClick()
-                    }
-
+                    },
+                    contentAlignment = Alignment.Center
                 ) {
                     Image(
                         painter = painterResource(R.drawable.button1),
                         contentDescription = null,
                         modifier = Modifier
-                            .size(200.dp),
-                        contentScale = ContentScale.Fit
+                            .width(250.dp)
+                            .height(70.dp),
+                        contentScale = ContentScale.FillBounds
                     )
+
                     Text(
                         text = stringResource(R.string.Login),
                         fontSize = 30.sp,
                         color = Color(0xFF174B96),
                         fontWeight = FontWeight.Bold,
-                        fontFamily = InterFontFamily,
+                        fontFamily = InterFontFamily
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                Box(
+                    modifier = Modifier.clickable(
+                        indication = null,
+                        interactionSource = remember { MutableInteractionSource() }
+                    ) {
+                        onSignUpClick()
+                    },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Image(
+                        painter = painterResource(R.drawable.button1),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .width(250.dp)
+                            .height(70.dp),
+                        contentScale = ContentScale.FillBounds
                     )
 
-                    Box(
-                        contentAlignment = Alignment.Center,
-                        modifier = Modifier
-                            .padding(top = 150.dp)
-                            .clickable(
-                                indication = null,
-                                interactionSource = remember { MutableInteractionSource() }
-                            ) {
-                                onSignUpClick()
-                            }
-
-                    ) {
-                        Image(
-                            painter = painterResource(R.drawable.button1),
-                            contentDescription = null,
-                            modifier = Modifier.size(200.dp),
-                            contentScale = ContentScale.Fit
-                        )
-                        Text(
-                            text = stringResource(R.string.Sign_Up),
-                            fontSize = 30.sp,
-                            color = Color(0xFF174B96),
-                            fontWeight = FontWeight.Bold,
-                            fontFamily = InterFontFamily,
-                        )
-                    }
+                    Text(
+                        text = stringResource(R.string.Sign_Up),
+                        fontSize = 30.sp,
+                        color = Color(0xFF174B96),
+                        fontWeight = FontWeight.Bold,
+                        fontFamily = InterFontFamily,
+                    )
                 }
             }
         }
@@ -430,7 +437,9 @@ class MainActivity : ComponentActivity() {
         }
 
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(top = 150.dp),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -439,30 +448,28 @@ class MainActivity : ComponentActivity() {
             ) {
                 Text(
                     text = "Style",
-                    fontSize = 75.sp,
+                    fontSize = 96.sp,
                     color = Color.White,
                     fontWeight = FontWeight.SemiBold,
                     fontFamily = Playfair_Display,
-                    modifier = Modifier.padding(top = 100.dp)
                 )
                 Text(
                     text = "Q",
-                    fontSize = 75.sp,
+                    fontSize = 96.sp,
                     color = Color.Yellow,
                     fontWeight = FontWeight.SemiBold,
                     fontFamily = Playfair_Display,
-                    modifier = Modifier.padding(top = 100.dp)
                 )
             }
         }
 
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(top = 350.dp),
             verticalArrangement = Arrangement.Bottom,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
-            Spacer(modifier = Modifier.height(275.dp))
 
             Box(
                 modifier = Modifier.fillMaxSize(),
@@ -508,7 +515,9 @@ class MainActivity : ComponentActivity() {
                             keyboardType = KeyboardType.Text,
                             imeAction = ImeAction.Next
                         ),
-                        modifier = Modifier.padding(horizontal = 50.dp)
+                        colors = solidTextFieldColors(),
+                        modifier = Modifier
+                            .padding(horizontal = 50.dp)
                     )
 
                     Spacer(modifier = Modifier.height(1.dp))
@@ -530,6 +539,7 @@ class MainActivity : ComponentActivity() {
                             keyboardType = KeyboardType.Text,
                             imeAction = ImeAction.Next
                         ),
+                        colors = solidTextFieldColors(),
                         modifier = Modifier
                             .padding(horizontal = 50.dp)
                     )
@@ -578,8 +588,9 @@ class MainActivity : ComponentActivity() {
                             keyboardType = KeyboardType.Password,
                             imeAction = ImeAction.Done
                         ),
-
-                        modifier = Modifier.padding(horizontal = 50.dp)
+                        colors = solidTextFieldColors(),
+                        modifier = Modifier
+                            .padding(horizontal = 50.dp)
                     )
 
                     Spacer(modifier = Modifier.height(2.dp))
@@ -620,7 +631,7 @@ class MainActivity : ComponentActivity() {
                     ) {
                         Box(
                             modifier = Modifier
-                                .padding(horizontal = 50.dp)
+                                .padding(horizontal = 85.dp)
                                 .fillMaxWidth()
                                 .height(50.dp)
                                 .clickable(
@@ -739,7 +750,7 @@ class MainActivity : ComponentActivity() {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
                     text = "Style",
-                    fontSize = 75.sp,
+                    fontSize = 96.sp,
                     color = Color.White,
                     fontWeight = FontWeight.SemiBold,
                     fontFamily = Playfair_Display,
@@ -747,7 +758,7 @@ class MainActivity : ComponentActivity() {
                 )
                 Text(
                     text = "Q",
-                    fontSize = 75.sp,
+                    fontSize = 96.sp,
                     color = Color.Yellow,
                     fontWeight = FontWeight.SemiBold,
                     fontFamily = Playfair_Display,
@@ -755,11 +766,11 @@ class MainActivity : ComponentActivity() {
                 )
             }
 
-            Spacer(modifier = Modifier.height(30.dp))
+            Spacer(modifier = Modifier.height(50.dp))
 
             Text(
                 text = "Create Account",
-                fontSize = 30.sp,
+                fontSize = 36.sp,
                 color = Color.White,
                 fontWeight = FontWeight.SemiBold,
                 fontFamily = InterFontFamily,
@@ -774,241 +785,251 @@ class MainActivity : ComponentActivity() {
                 fontWeight = FontWeight.Medium,
                 fontFamily = InterFontFamily,
             )
+        }
 
-            Spacer(modifier = Modifier.height(50.dp))
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(
+                    top = 350.dp,
+                    start = 30.dp,
+                    end = 30.dp
+                ),
+            contentAlignment = Alignment.TopCenter
+        ) {
 
-            Box(
+            Image(
+                painter = painterResource(R.drawable.card_create),
+                contentDescription = null,
+                modifier = Modifier.fillMaxWidth(),
+                contentScale = ContentScale.FillWidth
+            )
+
+            Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 30.dp),
-                contentAlignment = Alignment.TopCenter
+                    .padding(top = 35.dp, start = 25.dp, end = 25.dp, bottom = 30.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                Image(
-                    painter = painterResource(R.drawable.card_create),
-                    contentDescription = null,
-                    modifier = Modifier.fillMaxWidth(),
-                    contentScale = ContentScale.FillWidth
+                OutlinedTextField(
+                    value = usernameInput,
+                    shape = RoundedCornerShape(100.dp),
+                    onValueChange = { usernameInput = it },
+                    label = { Text("Username") },
+                    singleLine = true,
+                    leadingIcon = {
+                        Icon(
+                            painter = painterResource(R.drawable.ic_person),
+                            contentDescription = null,
+                            modifier = Modifier.size(22.dp)
+                        )
+                    },
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        keyboardType = KeyboardType.Text,
+                        imeAction = ImeAction.Next
+                    ),
+                    colors = solidTextFieldColors(),
+                    modifier = Modifier
+                        .padding(horizontal = 10.dp)
+                        .fillMaxWidth()
                 )
 
-                Column(
+                OutlinedTextField(
+                    value = emailInput,
+                    shape = RoundedCornerShape(100.dp),
+                    onValueChange = { emailInput = it },
+                    label = { Text("Email") },
+                    singleLine = true,
+                    leadingIcon = {
+                        Icon(
+                            painter = painterResource(R.drawable.ic_email),
+                            contentDescription = null,
+                            modifier = Modifier.size(22.dp)
+                        )
+                    },
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        keyboardType = KeyboardType.Text,
+                        imeAction = ImeAction.Next
+                    ),
+                    colors = solidTextFieldColors(),
                     modifier = Modifier
+                        .padding(horizontal = 10.dp)
                         .fillMaxWidth()
-                        .padding(top = 20.dp, start = 25.dp, end = 25.dp, bottom = 30.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(4.dp)
-                ) {
-                    OutlinedTextField(
-                        value = usernameInput,
-                        shape = RoundedCornerShape(100.dp),
-                        onValueChange = { usernameInput = it },
-                        label = { Text("Username") },
-                        singleLine = true,
-                        leadingIcon = {
-                            Icon(
-                                painter = painterResource(R.drawable.ic_person),
-                                contentDescription = null,
-                                modifier = Modifier.size(22.dp)
-                            )
-                        },
-                        keyboardOptions = KeyboardOptions.Default.copy(
-                            keyboardType = KeyboardType.Text,
-                            imeAction = ImeAction.Next
-                        ),
-                        modifier = Modifier
-                            .padding(horizontal = 10.dp)
-                            .fillMaxWidth()
-                    )
+                )
 
-                    OutlinedTextField(
-                        value = emailInput,
-                        shape = RoundedCornerShape(100.dp),
-                        onValueChange = { emailInput = it },
-                        label = { Text("Email") },
-                        singleLine = true,
-                        leadingIcon = {
-                            Icon(
-                                painter = painterResource(R.drawable.ic_email),
-                                contentDescription = null,
-                                modifier = Modifier.size(22.dp)
-                            )
-                        },
-                        keyboardOptions = KeyboardOptions.Default.copy(
-                            keyboardType = KeyboardType.Text,
-                            imeAction = ImeAction.Next
-                        ),
-                        modifier = Modifier
-                            .padding(horizontal = 10.dp)
-                            .fillMaxWidth()
-                    )
+                OutlinedTextField(
+                    value = numberhpInput,
+                    shape = RoundedCornerShape(100.dp),
+                    onValueChange = { numberhpInput = it },
+                    label = { Text("No Handphone") },
+                    singleLine = true,
+                    leadingIcon = {
+                        Icon(
+                            painter = painterResource(R.drawable.ic_phone),
+                            contentDescription = null,
+                            modifier = Modifier.size(22.dp)
+                        )
+                    },
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        keyboardType = KeyboardType.Phone,
+                        imeAction = ImeAction.Next
+                    ),
+                    colors = solidTextFieldColors(),
+                    modifier = Modifier
+                        .padding(horizontal = 10.dp)
+                        .fillMaxWidth()
+                )
 
-                    OutlinedTextField(
-                        value = numberhpInput,
-                        shape = RoundedCornerShape(100.dp),
-                        onValueChange = { numberhpInput = it },
-                        label = { Text("No Handphone") },
-                        singleLine = true,
-                        leadingIcon = {
-                            Icon(
-                                painter = painterResource(R.drawable.ic_phone),
-                                contentDescription = null,
-                                modifier = Modifier.size(22.dp)
-                            )
-                        },
-                        keyboardOptions = KeyboardOptions.Default.copy(
-                            keyboardType = KeyboardType.Phone,
-                            imeAction = ImeAction.Next
-                        ),
-                        modifier = Modifier
-                            .padding(horizontal = 10.dp)
-                            .fillMaxWidth()
-                    )
+                OutlinedTextField(
+                    value = passwordInput,
+                    shape = RoundedCornerShape(100.dp),
+                    onValueChange = { passwordInput = it },
+                    label = { Text("Password") },
+                    singleLine = true,
+                    visualTransformation =
+                        if (passwordVisible)
+                            VisualTransformation.None
+                        else
+                            PasswordVisualTransformation(),
 
-                    OutlinedTextField(
-                        value = passwordInput,
-                        shape = RoundedCornerShape(100.dp),
-                        onValueChange = { passwordInput = it },
-                        label = { Text("Password") },
-                        singleLine = true,
-                        visualTransformation =
-                            if (passwordVisible)
-                                VisualTransformation.None
-                            else
-                                PasswordVisualTransformation(),
+                    leadingIcon = {
+                        Icon(
+                            painter = painterResource(R.drawable.ic_password),
+                            contentDescription = null,
+                            modifier = Modifier.size(25.dp)
+                        )
+                    },
 
-                        leadingIcon = {
-                            Icon(
-                                painter = painterResource(R.drawable.ic_password),
-                                contentDescription = null,
-                                modifier = Modifier.size(25.dp)
-                            )
-                        },
-
-                        trailingIcon = {
-                            Icon(
-                                painter = painterResource(
-                                    if (passwordVisible)
-                                        R.drawable.icon_eye_close
-                                    else
-                                        R.drawable.icon_eye_open
-                                ),
-                                contentDescription = null,
-                                modifier = Modifier
-                                    .size(25.dp)
-                                    .clickable {
-                                        passwordVisible = !passwordVisible
-                                    }
-                            )
-                        },
-                        keyboardOptions = KeyboardOptions.Default.copy(
-                            keyboardType = KeyboardType.Password,
-                            imeAction = ImeAction.Next
-                        ),
-                        modifier = Modifier
-                            .padding(horizontal = 10.dp)
-                            .fillMaxWidth()
-                    )
-
-                    OutlinedTextField(
-                        value = confirmInput,
-                        shape = RoundedCornerShape(100.dp),
-                        onValueChange = { confirmInput = it },
-                        label = { Text("Confirm") },
-                        singleLine = true,
-                        visualTransformation =
-                            if (passwordVisible)
-                                VisualTransformation.None
-                            else
-                                PasswordVisualTransformation(),
-
-                        leadingIcon = {
-                            Icon(
-                                painter = painterResource(R.drawable.ic_password),
-                                contentDescription = null,
-                                modifier = Modifier.size(25.dp)
-                            )
-                        },
-
-                        trailingIcon = {
-                            Icon(
-                                painter = painterResource(
-                                    if (passwordVisible)
-                                        R.drawable.icon_eye_close
-                                    else
-                                        R.drawable.icon_eye_open
-                                ),
-                                contentDescription = null,
-                                modifier = Modifier
-                                    .size(25.dp)
-                                    .clickable {
-                                        passwordVisible = !passwordVisible
-                                    }
-                            )
-                        },
-                        keyboardOptions = KeyboardOptions.Default.copy(
-                            keyboardType = KeyboardType.Password,
-                            imeAction = ImeAction.Done
-                        ),
-                        modifier = Modifier
-                            .padding(horizontal = 10.dp)
-                            .fillMaxWidth()
-                    )
-
-                    Spacer(modifier = Modifier.height(12.dp))
-
-                    Button(
-                        onClick = { },
-                        contentPadding = PaddingValues(),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = Color.Transparent
-                        ),
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Box(
+                    trailingIcon = {
+                        Icon(
+                            painter = painterResource(
+                                if (passwordVisible)
+                                    R.drawable.icon_eye_close
+                                else
+                                    R.drawable.icon_eye_open
+                            ),
+                            contentDescription = null,
                             modifier = Modifier
-                                .padding(horizontal = 10.dp)
-                                .fillMaxWidth()
-                                .clickable(
-                                    indication = null,
-                                    interactionSource = remember { MutableInteractionSource() }
-                                ) {
-                                    onCreatAccountClick()
+                                .size(25.dp)
+                                .clickable {
+                                    passwordVisible = !passwordVisible
                                 }
-                                .height(50.dp)
-                                .background(
-                                    brush = Brush.horizontalGradient(
-                                        colors = listOf(
-                                            Color(0xFF005B96),
-                                            Color(0xFF011F4B)
-                                        )
-                                    ),
-                                    shape = RoundedCornerShape(100.dp)
-                                ),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text(
-                                text = "Create Account",
-                                color = Color.White,
-                                fontSize = 20.sp,
-                                fontWeight = FontWeight.SemiBold
-                            )
-                        }
-                    }
+                        )
+                    },
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        keyboardType = KeyboardType.Password,
+                        imeAction = ImeAction.Next
+                    ),
+                    colors = solidTextFieldColors(),
+                    modifier = Modifier
+                        .padding(horizontal = 10.dp)
+                        .fillMaxWidth()
+                )
 
-                    Row {
-                        Text(
-                            text = "Already have an account? ",
-                            fontSize = 12.sp,
-                            color = Color.Black,
-                            fontFamily = InterFontFamily
+                OutlinedTextField(
+                    value = confirmInput,
+                    shape = RoundedCornerShape(100.dp),
+                    onValueChange = { confirmInput = it },
+                    label = { Text("Confirm") },
+                    singleLine = true,
+                    visualTransformation =
+                        if (passwordVisible)
+                            VisualTransformation.None
+                        else
+                            PasswordVisualTransformation(),
+
+                    leadingIcon = {
+                        Icon(
+                            painter = painterResource(R.drawable.ic_password),
+                            contentDescription = null,
+                            modifier = Modifier.size(25.dp)
                         )
+                    },
+
+                    trailingIcon = {
+                        Icon(
+                            painter = painterResource(
+                                if (passwordVisible)
+                                    R.drawable.icon_eye_close
+                                else
+                                    R.drawable.icon_eye_open
+                            ),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .size(25.dp)
+                                .clickable {
+                                    passwordVisible = !passwordVisible
+                                }
+                            )
+                        },
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        keyboardType = KeyboardType.Password,
+                        imeAction = ImeAction.Done
+                    ),
+                    colors = solidTextFieldColors(),
+                    modifier = Modifier
+                        .padding(horizontal = 10.dp)
+                        .fillMaxWidth()
+                )
+
+                Spacer(modifier = Modifier.height(20.dp))
+
+                Button(
+                    onClick = { },
+                    contentPadding = PaddingValues(),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.Transparent
+                    ),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .padding(horizontal = 10.dp)
+                            .fillMaxWidth()
+                            .clickable(
+                                indication = null,
+                                interactionSource = remember { MutableInteractionSource() }
+                            ) {
+                                onCreatAccountClick()
+                            }
+                            .height(50.dp)
+                            .background(
+                                brush = Brush.horizontalGradient(
+                                    colors = listOf(
+                                        Color(0xFF005B96),
+                                        Color(0xFF011F4B)
+                                    )
+                                ),
+                                shape = RoundedCornerShape(100.dp)
+                            ),
+                        contentAlignment = Alignment.Center
+                    ) {
                         Text(
-                            text = "Login",
-                            fontSize = 12.sp,
-                            color = Color(0xFF174C97),
-                            fontWeight = FontWeight.SemiBold,
-                            fontFamily = InterFontFamily
+                            text = "Create Account",
+                            color = Color.White,
+                            fontSize = 22.sp,
+                            fontWeight = FontWeight.SemiBold
                         )
                     }
+                }
+
+                Spacer(modifier = Modifier.height(6.dp))
+
+                Row {
+                    Text(
+                        text = "Already have an account? ",
+                        fontSize = 16.sp,
+                        color = Color.Black,
+                        fontFamily = InterFontFamily
+                    )
+                    Text(
+                        text = "Login",
+                        fontSize = 16.sp,
+                        color = Color(0xFF174C97),
+                        fontWeight = FontWeight.SemiBold,
+                        fontFamily = InterFontFamily
+                    )
                 }
             }
         }
@@ -1079,7 +1100,7 @@ class MainActivity : ComponentActivity() {
 
                         Text(
                             text = "Complete\nYour Profile",
-                            fontSize = 32.sp,
+                            fontSize = 36.sp,
                             color = Color.White,
                             fontWeight = FontWeight.SemiBold,
                             textAlign = TextAlign.Center,
@@ -1140,6 +1161,7 @@ class MainActivity : ComponentActivity() {
                                 keyboardType = KeyboardType.Text,
                                 imeAction = ImeAction.Next
                             ),
+                            colors = solidTextFieldColors(),
                             modifier = Modifier
                                 .padding(horizontal = 10.dp)
                                 .fillMaxWidth()
@@ -1162,6 +1184,7 @@ class MainActivity : ComponentActivity() {
                                 keyboardType = KeyboardType.Text,
                                 imeAction = ImeAction.Next
                             ),
+                            colors = solidTextFieldColors(),
                             modifier = Modifier
                                 .padding(horizontal = 10.dp)
                                 .fillMaxWidth()
@@ -1184,6 +1207,7 @@ class MainActivity : ComponentActivity() {
                                 keyboardType = KeyboardType.Text,
                                 imeAction = ImeAction.Next
                             ),
+                            colors = solidTextFieldColors(),
                             modifier = Modifier
                                 .padding(horizontal = 10.dp)
                                 .fillMaxWidth()
@@ -1206,6 +1230,7 @@ class MainActivity : ComponentActivity() {
                                 keyboardType = KeyboardType.Text,
                                 imeAction = ImeAction.Next
                             ),
+                            colors = solidTextFieldColors(),
                             modifier = Modifier
                                 .padding(horizontal = 10.dp)
                                 .fillMaxWidth()
@@ -1228,6 +1253,7 @@ class MainActivity : ComponentActivity() {
                                 keyboardType = KeyboardType.Text,
                                 imeAction = ImeAction.Next
                             ),
+                            colors = solidTextFieldColors(),
                             modifier = Modifier
                                 .padding(horizontal = 10.dp)
                                 .fillMaxWidth()
@@ -1250,6 +1276,7 @@ class MainActivity : ComponentActivity() {
                                 keyboardType = KeyboardType.Text,
                                 imeAction = ImeAction.Next
                             ),
+                            colors = solidTextFieldColors(),
                             modifier = Modifier
                                 .padding(horizontal = 10.dp)
                                 .fillMaxWidth()
@@ -1520,7 +1547,7 @@ class MainActivity : ComponentActivity() {
         ) {
             Text(
                 text = "Welcome Back\nTo",
-                fontSize = 32.sp,
+                fontSize = 40.sp,
                 color = Color.White,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
@@ -1535,14 +1562,14 @@ class MainActivity : ComponentActivity() {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
                     text = "Style",
-                    fontSize = 75.sp,
+                    fontSize = 96.sp,
                     color = Color.White,
                     fontWeight = FontWeight.SemiBold,
                     fontFamily = Playfair_Display,
                 )
                 Text(
                     text = "Q",
-                    fontSize = 75.sp,
+                    fontSize = 96.sp,
                     color = Color.Yellow,
                     fontWeight = FontWeight.SemiBold,
                     fontFamily = Playfair_Display,
@@ -1553,7 +1580,7 @@ class MainActivity : ComponentActivity() {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(bottom = 150.dp),
+                .padding(bottom = 250.dp),
             verticalArrangement = Arrangement.Bottom,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -1605,10 +1632,10 @@ class MainActivity : ComponentActivity() {
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(
-                        top = 120.dp,
+                        top = 115.dp,
                         bottom = 120.dp,
-                        start = 50.dp,
-                        end = 50.dp
+                        start = 35.dp,
+                        end = 35.dp
                     ),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
@@ -1627,7 +1654,7 @@ class MainActivity : ComponentActivity() {
 
                     Text(
                         text = "Hello",
-                        fontSize = 30.sp,
+                        fontSize = 36.sp,
                         color = Color.Black,
                         fontWeight = FontWeight.Bold,
                         textAlign = TextAlign.Center,
@@ -1637,13 +1664,13 @@ class MainActivity : ComponentActivity() {
 
                     Text(
                         text = "StyleQ helps you discover\noutfits that match your\npersonality and lifestyle\ninstantly.",
-                        fontSize = 16.sp,
+                        fontSize = 20.sp,
                         color = Color.Black,
                         fontWeight = FontWeight.Light,
                         textAlign = TextAlign.Center,
                         lineHeight = 26.sp,
                         fontFamily = NunitoSansFontFamily,
-                        modifier = Modifier.padding(top = 375.dp)
+                        modifier = Modifier.padding(top = 400.dp)
                     )
                 }
             }
@@ -1686,8 +1713,8 @@ class MainActivity : ComponentActivity() {
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(
-                        top = 120.dp,
-                        bottom = 120.dp,
+                        top = 130.dp,
+                        bottom = 130.dp,
                         start = 50.dp,
                         end = 50.dp
                     ),
@@ -1709,7 +1736,7 @@ class MainActivity : ComponentActivity() {
 
                     Text(
                         text = "Explore",
-                        fontSize = 30.sp,
+                        fontSize = 36.sp,
                         color = Color.Black,
                         fontWeight = FontWeight.Bold,
                         textAlign = TextAlign.Center,
@@ -1719,13 +1746,13 @@ class MainActivity : ComponentActivity() {
 
                     Text(
                         text = "Get personalized fashion\ntips, curated looks, and\nexclusive deals—all in one\nstylish app.",
-                        fontSize = 16.sp,
+                        fontSize = 20.sp,
                         color = Color.Black,
                         fontWeight = FontWeight.Light,
                         textAlign = TextAlign.Center,
                         lineHeight = 26.sp,
                         fontFamily = NunitoSansFontFamily,
-                        modifier = Modifier.padding(top = 375.dp)
+                        modifier = Modifier.padding(top = 400.dp)
                     )
                 }
             }
@@ -1768,8 +1795,8 @@ class MainActivity : ComponentActivity() {
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(
-                        top = 120.dp,
-                        bottom = 120.dp,
+                        top = 130.dp,
+                        bottom = 130.dp,
                         start = 50.dp,
                         end = 50.dp
                     ),
@@ -1791,7 +1818,7 @@ class MainActivity : ComponentActivity() {
 
                     Text(
                         text = "Ready?",
-                        fontSize = 30.sp,
+                        fontSize = 36.sp,
                         color = Color.Black,
                         fontWeight = FontWeight.Bold,
                         textAlign = TextAlign.Center,
@@ -1801,14 +1828,14 @@ class MainActivity : ComponentActivity() {
                     )
                     Text(
                         text = "StyleQ is your smart fashion\nadvisor, guiding you to dress\nwith confidence every day.",
-                        fontSize = 16.sp,
+                        fontSize = 20.sp,
                         color = Color.Black,
                         fontWeight = FontWeight.Light,
                         textAlign = TextAlign.Center,
                         lineHeight = 26.sp,
                         fontFamily = NunitoSansFontFamily,
                         modifier = Modifier
-                            .padding(top = 375.dp)
+                            .padding(top = 400.dp)
                     )
                 }
             }
@@ -3112,6 +3139,7 @@ class MainActivity : ComponentActivity() {
                                 modifier = Modifier.size(26.dp)
                             )
                         },
+                        colors = solidTextFieldColors(),
                         modifier = Modifier
                             .padding(horizontal = 10.dp)
                             .fillMaxWidth()
@@ -3128,6 +3156,7 @@ class MainActivity : ComponentActivity() {
                                 modifier = Modifier.size(26.dp)
                             )
                         },
+                        colors = solidTextFieldColors(),
                         modifier = Modifier
                             .padding(horizontal = 10.dp)
                             .fillMaxWidth()
@@ -3144,6 +3173,7 @@ class MainActivity : ComponentActivity() {
                                 modifier = Modifier.size(26.dp)
                             )
                         },
+                        colors = solidTextFieldColors(),
                         modifier = Modifier
                             .padding(horizontal = 10.dp)
                             .fillMaxWidth()
@@ -3160,6 +3190,7 @@ class MainActivity : ComponentActivity() {
                                 modifier = Modifier.size(26.dp)
                             )
                         },
+                        colors = solidTextFieldColors(),
                         modifier = Modifier
                             .padding(horizontal = 10.dp)
                             .fillMaxWidth()
@@ -3176,6 +3207,7 @@ class MainActivity : ComponentActivity() {
                                 modifier = Modifier.size(26.dp)
                             )
                         },
+                        colors = solidTextFieldColors(),
                         modifier = Modifier
                             .padding(horizontal = 10.dp)
                             .fillMaxWidth()
@@ -3192,6 +3224,7 @@ class MainActivity : ComponentActivity() {
                                 modifier = Modifier.size(26.dp)
                             )
                         },
+                        colors = solidTextFieldColors(),
                         modifier = Modifier
                             .padding(horizontal = 10.dp)
                             .fillMaxWidth()
@@ -3430,7 +3463,8 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun GreetingPreview() {
         StyleQTheme {
-            StyleQApp(
-            )
+            ResponsiveScale {
+                StyleQApp()
+            }
         }
     }
