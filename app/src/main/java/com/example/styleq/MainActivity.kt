@@ -284,7 +284,7 @@ fun StyleQApp(
                     navController.navigate("categories")
                 },
                 onShopClick = {
-                    navController.navigate("shop_placeholder")
+                    navController.navigate(" ")
                 },
             )
         }
