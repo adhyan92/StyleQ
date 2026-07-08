@@ -302,7 +302,7 @@ fun StyleQApp(
                     navController.navigate("categories")
                 },
                 onShopClick = {
-                    navController.navigate("shop_placeholder")
+                    navController.navigate(" ")
                 },
                 onProfileClick = {
                     navController.navigate("profile_screen")
@@ -326,7 +326,7 @@ fun StyleQApp(
                     navController.navigate("categories")
                 },
                 onShopClick = {
-                    navController.navigate("shop_placeholder")
+                    navController.navigate(" ")
                 },
                 onProfileClick = {
                     navController.navigate("profile_screen")
@@ -350,7 +350,7 @@ fun StyleQApp(
                     navController.navigate("categories")
                 },
                 onShopClick = {
-                    navController.navigate("shop_placeholder")
+                    navController.navigate(" ")
                 },
                 onProfileClick = {
                     navController.navigate("profile_screen")
@@ -464,9 +464,6 @@ fun StyleQApp(
             )
         }
 
-        // Placeholder route for the "Shop" feature, which has no design/screen yet.
-        // Kept blank on purpose to preserve the original behavior (blank screen)
-        // instead of crashing on an undefined destination.
         composable("shop_placeholder") {
             Box(modifier = Modifier.fillMaxSize())
         }
@@ -3343,11 +3340,12 @@ fun Dashboard(
                     painter = painterResource(R.drawable.ic_shop),
                     contentDescription = "Shop",
                     modifier = Modifier
-                        .clickable(
-                            indication = null,
-                            interactionSource = remember { MutableInteractionSource() }
-                        ) {
-                            onShopClick()
+                        .clickable {
+                            Toast.makeText(
+                                context,
+                                "Feature Coming Soon",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                         .size(28.dp))
                 Icon(
@@ -3852,11 +3850,12 @@ fun TrendingNow(
                     painter = painterResource(R.drawable.ic_shop),
                     contentDescription = "Shop",
                     modifier = Modifier
-                        .clickable(
-                            indication = null,
-                            interactionSource = remember { MutableInteractionSource() }
-                        ) {
-                            onShopClick()
+                        .clickable {
+                            Toast.makeText(
+                                context,
+                                "Feature Coming Soon",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                         .size(28.dp))
                 Icon(
@@ -4258,11 +4257,12 @@ fun Categories(
                     painter = painterResource(R.drawable.ic_shop),
                     contentDescription = "Shop",
                     modifier = Modifier
-                        .clickable(
-                            indication = null,
-                            interactionSource = remember { MutableInteractionSource() }
-                        ) {
-                            onShopClick()
+                        .clickable {
+                            Toast.makeText(
+                                context,
+                                "Feature Coming Soon",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                         .size(28.dp))
                 Icon(
@@ -4686,10 +4686,13 @@ fun DisplayFashion(
                     contentDescription = "Shop",
                     modifier = Modifier
                         .size(28.dp)
-                        .clickable(
-                            indication = null,
-                            interactionSource = remember { MutableInteractionSource() }
-                        ) { onShopClick() }
+                        .clickable {
+                            Toast.makeText(
+                                context,
+                                "Feature Coming Soon",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                 )
 
                 Icon(
@@ -4923,10 +4926,13 @@ fun PartnerShop(
                     contentDescription = "Shop",
                     modifier = Modifier
                         .size(28.dp)
-                        .clickable(
-                            indication = null,
-                            interactionSource = remember { MutableInteractionSource() }
-                        ) { onShopClick() }
+                        .clickable {
+                            Toast.makeText(
+                                context,
+                                "Feature Coming Soon",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                 )
 
                 Icon(
@@ -5126,6 +5132,8 @@ fun MyVoucher(
     onShopClick: () -> Unit = {},
     onProfileClick: () -> Unit = {},
 ) {
+
+    val context = LocalContext.current
     var isProgressTabActive by remember { mutableStateOf(false) }
 
     val activeRewardsList = remember {
@@ -5220,9 +5228,14 @@ fun MyVoucher(
                     contentDescription = "Shop",
                     modifier = Modifier
                         .size(28.dp)
-                        .clickable(
-                            indication = null,
-                            interactionSource = remember { MutableInteractionSource() }) { onShopClick() })
+                        .clickable {
+                            Toast.makeText(
+                                context,
+                                "Feature Coming Soon",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                )
                 Icon(
                     painter = painterResource(R.drawable.ic_profile),
                     contentDescription = "Profile",
