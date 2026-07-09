@@ -259,6 +259,9 @@ fun StyleQApp(
         composable("dashboard") {
             Dashboard(
                 modifier = Modifier,
+                onClick = {
+                    navController.navigate("categories")
+                },
                 onProfileClick = {
                     navController.navigate("profile_screen")
                 },
@@ -281,10 +284,10 @@ fun StyleQApp(
                     navController.navigate("color_matching")
                 },
                 onCategoriesClick = {
-                    navController.navigate("categories")
+                    navController.navigate("trending_now")
                 },
                 onShopClick = {
-                    navController.navigate(" ")
+                    navController.navigate("display_fashion")
                 },
             )
         }
@@ -299,10 +302,10 @@ fun StyleQApp(
                     navController.navigate("color_matching")
                 },
                 onCategoriesClick = {
-                    navController.navigate("categories")
+                    navController.navigate("trending_now")
                 },
                 onShopClick = {
-                    navController.navigate(" ")
+                    navController.navigate("display_fashion")
                 },
                 onProfileClick = {
                     navController.navigate("profile_screen")
@@ -323,10 +326,10 @@ fun StyleQApp(
                     navController.navigate("color_matching")
                 },
                 onCategoriesClick = {
-                    navController.navigate("categories")
+                    navController.navigate("trending_now")
                 },
                 onShopClick = {
-                    navController.navigate(" ")
+                    navController.navigate("display_fashion")
                 },
                 onProfileClick = {
                     navController.navigate("profile_screen")
@@ -347,10 +350,10 @@ fun StyleQApp(
                     navController.navigate("color_matching")
                 },
                 onCategoriesClick = {
-                    navController.navigate("categories")
+                    navController.navigate("trending_now")
                 },
                 onShopClick = {
-                    navController.navigate(" ")
+                    navController.navigate("display_fashion")
                 },
                 onProfileClick = {
                     navController.navigate("profile_screen")
@@ -371,10 +374,10 @@ fun StyleQApp(
                     navController.navigate("color_matching")
                 },
                 onCategoriesClick = {
-                    navController.navigate("categories")
+                    navController.navigate("trending_now")
                 },
                 onShopClick = {
-                    navController.navigate("shop_placeholder")
+                    navController.navigate("display_fashion")
                 },
                 onProfileClick = {
                     navController.navigate("profile_screen")
@@ -395,10 +398,10 @@ fun StyleQApp(
                     navController.navigate("color_matching")
                 },
                 onCategoriesClick = {
-                    navController.navigate("categories")
+                    navController.navigate("trending_now")
                 },
                 onShopClick = {
-                    navController.navigate("shop_placeholder")
+                    navController.navigate("display_fashion")
                 },
                 onProfileClick = {
                     navController.navigate("profile_screen")
@@ -462,10 +465,6 @@ fun StyleQApp(
                     navController.navigate("dashboard")
                 }
             )
-        }
-
-        composable("shop_placeholder") {
-            Box(modifier = Modifier.fillMaxSize())
         }
     }
 }
@@ -3269,6 +3268,7 @@ fun Welcome_Screen2(
 @Composable
 fun Dashboard(
     modifier: Modifier = Modifier,
+    onClick: () -> Unit = {},
     onProfileClick: () -> Unit = {},
     onMyActivityClick: () -> Unit = {},
     onFavoriteClick: () -> Unit = {},
@@ -3340,12 +3340,11 @@ fun Dashboard(
                     painter = painterResource(R.drawable.ic_shop),
                     contentDescription = "Shop",
                     modifier = Modifier
-                        .clickable {
-                            Toast.makeText(
-                                context,
-                                "Feature Coming Soon",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                        .clickable(
+                            indication = null,
+                            interactionSource = remember { MutableInteractionSource() }
+                        ) {
+                            onShopClick()
                         }
                         .size(28.dp))
                 Icon(
@@ -3637,12 +3636,11 @@ fun Dashboard(
                         modifier = Modifier
                             .weight(1f)
                             .height(210.dp)
-                            .clickable {
-                                Toast.makeText(
-                                    context,
-                                    "Feature Coming Soon",
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                            .clickable(
+                                indication = null,
+                                interactionSource = remember { MutableInteractionSource() }
+                            ) {
+                                onClick()
                             },
                         contentScale = ContentScale.FillHeight
                     )
@@ -3653,12 +3651,11 @@ fun Dashboard(
                         modifier = Modifier
                             .weight(1f)
                             .height(210.dp)
-                            .clickable {
-                                Toast.makeText(
-                                    context,
-                                    "Feature Coming Soon",
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                            .clickable(
+                                indication = null,
+                                interactionSource = remember { MutableInteractionSource() }
+                            ) {
+                                onClick()
                             },
                         contentScale = ContentScale.FillHeight
                     )
@@ -3675,12 +3672,11 @@ fun Dashboard(
                         modifier = Modifier
                             .weight(1f)
                             .height(210.dp)
-                            .clickable {
-                                Toast.makeText(
-                                    context,
-                                    "Feature Coming Soon",
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                            .clickable(
+                                indication = null,
+                                interactionSource = remember { MutableInteractionSource() }
+                            ) {
+                                onClick()
                             },
                         contentScale = ContentScale.FillHeight
                     )
@@ -3691,12 +3687,11 @@ fun Dashboard(
                         modifier = Modifier
                             .weight(1f)
                             .height(210.dp)
-                            .clickable {
-                                Toast.makeText(
-                                    context,
-                                    "Feature Coming Soon",
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                            .clickable(
+                                indication = null,
+                                interactionSource = remember { MutableInteractionSource() }
+                            ) {
+                                onClick()
                             },
                         contentScale = ContentScale.FillHeight
                     )
@@ -3713,12 +3708,11 @@ fun Dashboard(
                         modifier = Modifier
                             .weight(1f)
                             .height(210.dp)
-                            .clickable {
-                                Toast.makeText(
-                                    context,
-                                    "Feature Coming Soon",
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                            .clickable(
+                                indication = null,
+                                interactionSource = remember { MutableInteractionSource() }
+                            ) {
+                                onClick()
                             },
                         contentScale = ContentScale.FillHeight
                     )
@@ -3729,13 +3723,12 @@ fun Dashboard(
                         modifier = Modifier
                             .weight(1f)
                             .height(210.dp)
-                            .clickable {
-                                Toast.makeText(
-                                    context,
-                                    "Feature Coming Soon",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            },
+                            .clickable(
+                            indication = null,
+                            interactionSource = remember { MutableInteractionSource() }
+                        ) {
+                            onClick()
+                        },
                         contentScale = ContentScale.FillHeight
                     )
                 }
@@ -3751,12 +3744,11 @@ fun Dashboard(
                         modifier = Modifier
                             .weight(1f)
                             .height(210.dp)
-                            .clickable {
-                                Toast.makeText(
-                                    context,
-                                    "Feature Coming Soon",
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                            .clickable(
+                                indication = null,
+                                interactionSource = remember { MutableInteractionSource() }
+                            ) {
+                                onClick()
                             },
                         contentScale = ContentScale.FillHeight
                     )
@@ -3767,12 +3759,11 @@ fun Dashboard(
                         modifier = Modifier
                             .weight(1f)
                             .height(210.dp)
-                            .clickable {
-                                Toast.makeText(
-                                    context,
-                                    "Feature Coming Soon",
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                            .clickable(
+                                indication = null,
+                                interactionSource = remember { MutableInteractionSource() }
+                            ) {
+                                onClick()
                             },
                         contentScale = ContentScale.FillHeight
                     )
@@ -3850,12 +3841,11 @@ fun TrendingNow(
                     painter = painterResource(R.drawable.ic_shop),
                     contentDescription = "Shop",
                     modifier = Modifier
-                        .clickable {
-                            Toast.makeText(
-                                context,
-                                "Feature Coming Soon",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                        .clickable(
+                            indication = null,
+                            interactionSource = remember { MutableInteractionSource() }
+                        ) {
+                            onShopClick()
                         }
                         .size(28.dp))
                 Icon(
@@ -4257,12 +4247,11 @@ fun Categories(
                     painter = painterResource(R.drawable.ic_shop),
                     contentDescription = "Shop",
                     modifier = Modifier
-                        .clickable {
-                            Toast.makeText(
-                                context,
-                                "Feature Coming Soon",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                        .clickable(
+                            indication = null,
+                            interactionSource = remember { MutableInteractionSource() }
+                        ) {
+                            onShopClick()
                         }
                         .size(28.dp))
                 Icon(
@@ -4477,13 +4466,6 @@ fun Categories(
 
                             Text(
                                 text = "Formal Top",
-                                modifier = Modifier
-                                    .clickable(
-                                        interactionSource = remember { MutableInteractionSource() },
-                                        indication = null
-                                    ) {
-                                        onDisplayClick()
-                                    },
                                 fontFamily = RaleWayFontFamily,
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 20.sp,
@@ -4501,13 +4483,11 @@ fun Categories(
                                     modifier = Modifier
                                         .wrapContentWidth()
                                         .height(140.dp)
-                                        .clickable {
-                                            Toast.makeText(
-                                                context,
-                                                "Feature Coming Soon",
-                                                Toast.LENGTH_SHORT
-                                            )
-                                                .show()
+                                        .clickable(
+                                            indication = null,
+                                            interactionSource = remember { MutableInteractionSource() }
+                                        ) {
+                                            onDisplayClick()
                                         },
                                     contentScale = ContentScale.FillHeight
                                 )
@@ -4686,12 +4666,11 @@ fun DisplayFashion(
                     contentDescription = "Shop",
                     modifier = Modifier
                         .size(28.dp)
-                        .clickable {
-                            Toast.makeText(
-                                context,
-                                "Feature Coming Soon",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                        .clickable(
+                            indication = null,
+                            interactionSource = remember { MutableInteractionSource() }
+                        ) {
+                            onShopClick()
                         }
                 )
 
@@ -4926,12 +4905,11 @@ fun PartnerShop(
                     contentDescription = "Shop",
                     modifier = Modifier
                         .size(28.dp)
-                        .clickable {
-                            Toast.makeText(
-                                context,
-                                "Feature Coming Soon",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                        .clickable(
+                            indication = null,
+                            interactionSource = remember { MutableInteractionSource() }
+                        ) {
+                            onShopClick()
                         }
                 )
 
@@ -5228,12 +5206,11 @@ fun MyVoucher(
                     contentDescription = "Shop",
                     modifier = Modifier
                         .size(28.dp)
-                        .clickable {
-                            Toast.makeText(
-                                context,
-                                "Feature Coming Soon",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                        .clickable(
+                            indication = null,
+                            interactionSource = remember { MutableInteractionSource() }
+                        ) {
+                            onShopClick()
                         }
                 )
                 Icon(
