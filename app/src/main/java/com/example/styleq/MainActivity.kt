@@ -16,8 +16,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
@@ -63,6 +61,7 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.border
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
@@ -94,6 +93,11 @@ import com.example.styleq.ui.theme.ResponsiveScale
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.styleq.ui.theme.Playfair_Display
+import com.example.styleq.ui.theme.InterFontFamily
+import com.example.styleq.ui.theme.RaleWayFontFamily
+import com.example.styleq.ui.theme.CrimsonFontFamily
+import com.example.styleq.ui.theme.NunitoSansFontFamily
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -109,23 +113,6 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
-
-val Playfair_Display = FontFamily(
-    Font(R.font.playfair_display)
-)
-val InterFontFamily = FontFamily(
-    Font(R.font.inter, FontWeight.Normal)
-)
-val RaleWayFontFamily = FontFamily(
-    Font(R.font.raleway_semibold)
-)
-val CrimsonFontFamily = FontFamily(
-    Font(R.font.crimson_regular)
-)
-val NunitoSansFontFamily = FontFamily(
-    Font(R.font.nunito_sans)
-)
 
 @Composable
 fun StyleQApp(
@@ -4682,7 +4669,8 @@ fun DisplayFashion(
                         .clickable(
                             indication = null,
                             interactionSource = remember { MutableInteractionSource() }
-                        ) { onProfileClick() }
+                        )
+                        { onProfileClick() }
                 )
             }
         }
@@ -4826,6 +4814,7 @@ fun PartnerShop(
     onProfileClick: () -> Unit = {}
 ) {
     val context = LocalContext.current
+
     val shopList = listOf(
         PartnerShopData(
             logoRes = R.drawable.logo_3second,
@@ -4942,7 +4931,7 @@ fun PartnerShop(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Patner Shop",
+                    text = "Partner Shop",
                     fontSize = 28.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color(0xFF1A1A1A)
@@ -5003,6 +4992,12 @@ fun PartnerShop(
                                 contentDescription = shop.name,
                                 modifier = Modifier
                                     .size(110.dp)
+                                    .clickable {
+                                        Toast.makeText(
+                                            context, "${shop.name}: Feature Coming Soon",
+                                            Toast.LENGTH_SHORT)
+                                            .show()
+                                    }
                                     .clip(RoundedCornerShape(12.dp))
                                     .background(Color(0xFFF5F5F5)),
                                 contentScale = ContentScale.Crop
@@ -5327,11 +5322,12 @@ fun MyVoucher(
                         .padding(horizontal = 24.dp, vertical = 12.dp)
                 ) {
                     Canvas(modifier = Modifier.fillMaxSize()) {
-                        val dynamicCutoutY = size.height * 0.32f
+                        val lineY = size.height * 0.28f
+
                         drawLine(
                             color = Color(0xFF2E52F8),
-                            start = Offset(x = 12.dp.toPx(), y = dynamicCutoutY),
-                            end = Offset(x = size.width - 12.dp.toPx(), y = dynamicCutoutY),
+                            start = Offset(x = 0f, y = lineY), // Dimulai dari ujung kiri bingkai
+                            end = Offset(x = size.width, y = lineY), // Sampai ujung kanan bingkai
                             strokeWidth = 1.5.dp.toPx(),
                             pathEffect = PathEffect.dashPathEffect(floatArrayOf(12f, 12f), 0f)
                         )
@@ -5389,15 +5385,25 @@ fun MyVoucher(
                                 )
                             }
 
-                            Box(
-                                modifier = Modifier
-                                    .background(Color(0xFF2E52F8), RoundedCornerShape(8.dp))
-                                    .padding(horizontal = 14.dp, vertical = 8.dp),
-                                contentAlignment = Alignment.Center
+                            Button(
+                                onClick = {
+                                    Toast.makeText(
+                                        context,
+                                        "Feature Coming Soon",
+                                        Toast.LENGTH_SHORT
+                                    )
+                                        .show()
+                                },
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = Color(0xFF2E52F8),
+                                    contentColor = Color.White
+                                ),
+                                shape = RoundedCornerShape(8.dp),
+                                contentPadding = PaddingValues(horizontal = 14.dp, vertical = 8.dp),
+                                modifier = Modifier.wrapContentSize()
                             ) {
                                 Text(
                                     text = "Collected",
-                                    color = Color.White,
                                     fontSize = 12.sp,
                                     fontWeight = FontWeight.Bold
                                 )

@@ -8,7 +8,21 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.example.styleq.R
 
-// Set of Material typography styles to start with
+val Playfair_Display = FontFamily(
+    Font(R.font.playfair_display)
+)
+val InterFontFamily = FontFamily(
+    Font(R.font.inter, FontWeight.Normal)
+)
+val RaleWayFontFamily = FontFamily(
+    Font(R.font.raleway_semibold)
+)
+val CrimsonFontFamily = FontFamily(
+    Font(R.font.crimson_regular)
+)
+val NunitoSansFontFamily = FontFamily(
+    Font(R.font.nunito_sans)
+)
 
 val Typography = Typography(
     bodyLarge = TextStyle(
@@ -17,7 +31,8 @@ val Typography = Typography(
         fontSize = 16.sp,
         lineHeight = 24.sp,
         letterSpacing = 0.5.sp
-    )
+    ),
+
     /* Other default text styles to override
     titleLarge = TextStyle(
         fontFamily = FontFamily.Default,
