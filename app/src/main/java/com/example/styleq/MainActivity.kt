@@ -60,6 +60,7 @@ import android.widget.Toast
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.border
 import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CircleShape
@@ -961,6 +962,8 @@ fun CreateAccount(
     var passwordInput by remember { mutableStateOf("") }
     var confirmInput by remember { mutableStateOf("") }
 
+    val context = LocalContext.current
+
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
@@ -1255,6 +1258,14 @@ fun CreateAccount(
                     fontFamily = InterFontFamily
                 )
                 Text(
+                    modifier = Modifier
+                        .clickable {
+                            Toast.makeText(
+                                context,
+                                "Feature Coming Soon",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        },
                     text = "Login",
                     fontSize = 16.sp,
                     color = Color(0xFF174C97),
@@ -3638,11 +3649,12 @@ fun Dashboard(
                         modifier = Modifier
                             .weight(1f)
                             .height(210.dp)
-                            .clickable(
-                                indication = null,
-                                interactionSource = remember { MutableInteractionSource() }
-                            ) {
-                                onClick()
+                            .clickable {
+                                Toast.makeText(
+                                    context,
+                                    "Feature Coming Soon",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             },
                         contentScale = ContentScale.FillHeight
                     )
@@ -3659,11 +3671,12 @@ fun Dashboard(
                         modifier = Modifier
                             .weight(1f)
                             .height(210.dp)
-                            .clickable(
-                                indication = null,
-                                interactionSource = remember { MutableInteractionSource() }
-                            ) {
-                                onClick()
+                            .clickable {
+                                Toast.makeText(
+                                    context,
+                                    "Feature Coming Soon",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             },
                         contentScale = ContentScale.FillHeight
                     )
@@ -3674,11 +3687,12 @@ fun Dashboard(
                         modifier = Modifier
                             .weight(1f)
                             .height(210.dp)
-                            .clickable(
-                                indication = null,
-                                interactionSource = remember { MutableInteractionSource() }
-                            ) {
-                                onClick()
+                            .clickable {
+                                Toast.makeText(
+                                    context,
+                                    "Feature Coming Soon",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             },
                         contentScale = ContentScale.FillHeight
                     )
@@ -3695,11 +3709,12 @@ fun Dashboard(
                         modifier = Modifier
                             .weight(1f)
                             .height(210.dp)
-                            .clickable(
-                                indication = null,
-                                interactionSource = remember { MutableInteractionSource() }
-                            ) {
-                                onClick()
+                            .clickable {
+                                Toast.makeText(
+                                    context,
+                                    "Feature Coming Soon",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             },
                         contentScale = ContentScale.FillHeight
                     )
@@ -3710,12 +3725,13 @@ fun Dashboard(
                         modifier = Modifier
                             .weight(1f)
                             .height(210.dp)
-                            .clickable(
-                            indication = null,
-                            interactionSource = remember { MutableInteractionSource() }
-                        ) {
-                            onClick()
-                        },
+                            .clickable {
+                                Toast.makeText(
+                                    context,
+                                    "Feature Coming Soon",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            },
                         contentScale = ContentScale.FillHeight
                     )
                 }
@@ -3731,11 +3747,12 @@ fun Dashboard(
                         modifier = Modifier
                             .weight(1f)
                             .height(210.dp)
-                            .clickable(
-                                indication = null,
-                                interactionSource = remember { MutableInteractionSource() }
-                            ) {
-                                onClick()
+                            .clickable {
+                                Toast.makeText(
+                                    context,
+                                    "Feature Coming Soon",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             },
                         contentScale = ContentScale.FillHeight
                     )
@@ -3746,11 +3763,12 @@ fun Dashboard(
                         modifier = Modifier
                             .weight(1f)
                             .height(210.dp)
-                            .clickable(
-                                indication = null,
-                                interactionSource = remember { MutableInteractionSource() }
-                            ) {
-                                onClick()
+                            .clickable {
+                                Toast.makeText(
+                                    context,
+                                    "Feature Coming Soon",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             },
                         contentScale = ContentScale.FillHeight
                     )
@@ -5326,8 +5344,8 @@ fun MyVoucher(
 
                         drawLine(
                             color = Color(0xFF2E52F8),
-                            start = Offset(x = 0f, y = lineY), // Dimulai dari ujung kiri bingkai
-                            end = Offset(x = size.width, y = lineY), // Sampai ujung kanan bingkai
+                            start = Offset(x = 0f, y = lineY),
+                            end = Offset(x = size.width, y = lineY),
                             strokeWidth = 1.5.dp.toPx(),
                             pathEffect = PathEffect.dashPathEffect(floatArrayOf(12f, 12f), 0f)
                         )
@@ -6498,10 +6516,12 @@ fun ColorMatching(
     onShopClick: () -> Unit = {}
 ) {
 
+    val context = LocalContext.current
+
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(top = 120.dp)
+            .padding(top = 60.dp)
     ) {
 
         Row(
@@ -6513,7 +6533,8 @@ fun ColorMatching(
         ) {
 
             Column(
-                modifier = Modifier.weight(1f)
+                modifier = Modifier
+                    .weight(1f)
             ) {
 
                 Text(
@@ -6621,17 +6642,25 @@ fun ColorMatching(
             )
         }
 
-        Spacer(modifier = Modifier.height(40.dp))
+        Spacer(modifier = Modifier.weight(1f))
 
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 26.dp),
+                .padding(horizontal = 26.dp)
+                .navigationBarsPadding(),
             horizontalArrangement = Arrangement.spacedBy(20.dp)
         ) {
 
             Button(
-                onClick = { onSaveLookClick() },
+                onClick = {
+                    Toast.makeText(
+                        context,
+                        "Feature Coming Soon",
+                        Toast.LENGTH_SHORT
+                    )
+                        .show()
+                },
                 modifier = Modifier
                     .weight(1f)
                     .height(58.dp),
@@ -6667,7 +6696,14 @@ fun ColorMatching(
             }
 
             Button(
-                onClick = { onShopClick() },
+                onClick = {
+                    Toast.makeText(
+                        context,
+                        "Feature Coming Soon",
+                        Toast.LENGTH_SHORT
+                    )
+                        .show()
+                },
                 modifier = Modifier
                     .weight(1f)
                     .height(58.dp),
