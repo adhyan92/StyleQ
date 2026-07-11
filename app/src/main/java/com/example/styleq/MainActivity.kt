@@ -149,6 +149,9 @@ fun StyleQApp(
                 modifier = Modifier,
                 onLoginClick = {
                     navController.navigate("welcome_screen")
+                },
+                onCreatAccountClick = {
+                    navController.navigate("create_account")
                 }
             )
         }
@@ -158,7 +161,10 @@ fun StyleQApp(
                 modifier = Modifier,
                 onCreatAccountClick = {
                     navController.navigate("complete_profile")
-                }
+                },
+                onLoginClick = {
+                    navController.navigate("login_screen")
+                },
             )
         }
 
@@ -635,6 +641,7 @@ fun OutlinedTextField(
 fun LoginScreen(
     modifier: Modifier = Modifier,
     onLoginClick: () -> Unit,
+    onCreatAccountClick: () -> Unit
 ) {
     var usernameInput by remember { mutableStateOf("") }
     var emailInput by remember { mutableStateOf("") }
@@ -936,6 +943,13 @@ fun LoginScreen(
                             fontFamily = InterFontFamily
                         )
                         Text(
+                            modifier = Modifier
+                                .clickable(
+                                    indication = null,
+                                    interactionSource = remember { MutableInteractionSource() }
+                                ) {
+                                    onCreatAccountClick()
+                                },
                             text = "Register",
                             fontSize = 14.sp,
                             color = Color(0xFF174C97),
@@ -953,6 +967,7 @@ fun LoginScreen(
 fun CreateAccount(
     modifier: Modifier = Modifier,
     onCreatAccountClick: () -> Unit,
+    onLoginClick: () -> Unit
 
     ) {
     var passwordVisible by remember { mutableStateOf(false) }
@@ -1259,12 +1274,11 @@ fun CreateAccount(
                 )
                 Text(
                     modifier = Modifier
-                        .clickable {
-                            Toast.makeText(
-                                context,
-                                "Feature Coming Soon",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                        .clickable(
+                            indication = null,
+                            interactionSource = remember { MutableInteractionSource() }
+                        ) {
+                            onLoginClick()
                         },
                     text = "Login",
                     fontSize = 16.sp,
