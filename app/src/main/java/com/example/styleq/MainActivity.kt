@@ -3462,7 +3462,7 @@ fun Dashboard(
                             painter = painterResource(R.drawable.ic_favorite),
                             contentDescription = "Favorite",
                             tint = Color(0xFFFF3B30),
-                            modifier = Modifier.size(24.dp)
+                            modifier = Modifier.size(28.dp)
                         )
                     }
 
@@ -3480,7 +3480,7 @@ fun Dashboard(
                             painter = painterResource(R.drawable.ic_settings),
                             contentDescription = "Settings",
                             tint = Color(0xFF5A84C7),
-                            modifier = Modifier.size(24.dp)
+                            modifier = Modifier.size(28.dp)
                         )
                     }
                 }
