@@ -148,7 +148,7 @@ fun StyleQApp(
             LoginScreen(
                 modifier = Modifier,
                 onLoginClick = {
-                    navController.navigate("welcome_screen")
+                    navController.navigate("dashboard")
                 },
                 onCreatAccountClick = {
                     navController.navigate("create_account")
@@ -3296,6 +3296,7 @@ fun Dashboard(
     val mainVerticalScrollState = rememberScrollState()
     val trendingScrollState = rememberScrollState()
     val futureScrollState = rememberScrollState()
+    var selectedTab by remember { mutableStateOf("home") }
 
     Scaffold(
 
@@ -3315,61 +3316,171 @@ fun Dashboard(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Icon(
-                    painter = painterResource(R.drawable.ic_home),
-                    contentDescription = "Home",
+                Box(
                     modifier = Modifier
+                        .size(48.dp)
+                        .clip(CircleShape)
+                        .background(
+                            brush = if (selectedTab == "home") {
+                                Brush.linearGradient(
+                                    colors = listOf(Color(0xFF005B96), Color(0xFF011F4B)),
+                                    start = Offset(0f, 0f),
+                                    end = Offset(1000f, 1000f)
+                                )
+                            } else {
+                                Brush.linearGradient(
+                                    colors = listOf(Color.Transparent, Color.Transparent)
+                                )
+                            }
+                        )
                         .clickable(
                             indication = null,
                             interactionSource = remember { MutableInteractionSource() }
                         ) {
+                            selectedTab = "home"
                             onHomeClick()
-                        }
-                        .size(28.dp))
-                Icon(
-                    painter = painterResource(R.drawable.ic_color_matcher),
-                    contentDescription = "Search",
+                        },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_home),
+                        contentDescription = "Home",
+                        tint = if (selectedTab == "home") Color.White else Color(0xFF9E9E9E),
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
+                Box(
                     modifier = Modifier
+                        .size(48.dp)
+                        .clip(CircleShape)
+                        .background(
+                            brush = if (selectedTab == "color_matcher") {
+                                Brush.linearGradient(
+                                    colors = listOf(Color(0xFF005B96), Color(0xFF011F4B)),
+                                    start = Offset(0f, 0f),
+                                    end = Offset(1000f, 1000f)
+                                )
+                            } else {
+                                Brush.linearGradient(
+                                    colors = listOf(Color.Transparent, Color.Transparent)
+                                )
+                            }
+                        )
                         .clickable(
                             indication = null,
                             interactionSource = remember { MutableInteractionSource() }
                         ) {
+                            selectedTab = "color_matcher"
                             onColorMatcherClick()
-                        }
-                        .size(28.dp))
-                Icon(
-                    painter = painterResource(R.drawable.ic_categories),
-                    contentDescription = "Document",
+                        },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_color_matcher),
+                        contentDescription = "Search",
+                        tint = if (selectedTab == "color_matcher") Color.White else Color(0xFF9E9E9E),
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
+                Box(
                     modifier = Modifier
+                        .size(48.dp)
+                        .clip(CircleShape)
+                        .background(
+                            brush = if (selectedTab == "categories") {
+                                Brush.linearGradient(
+                                    colors = listOf(Color(0xFF005B96), Color(0xFF011F4B)),
+                                    start = Offset(0f, 0f),
+                                    end = Offset(1000f, 1000f)
+                                )
+                            } else {
+                                Brush.linearGradient(
+                                    colors = listOf(Color.Transparent, Color.Transparent)
+                                )
+                            }
+                        )
                         .clickable(
                             indication = null,
                             interactionSource = remember { MutableInteractionSource() }
                         ) {
+                            selectedTab = "categories"
                             onCategoriesClick()
-                        }
-                        .size(28.dp))
-                Icon(
-                    painter = painterResource(R.drawable.ic_shop),
-                    contentDescription = "Shop",
+                        },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_categories),
+                        contentDescription = "Document",
+                        tint = if (selectedTab == "categories") Color.White else Color(0xFF9E9E9E),
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
+                Box(
                     modifier = Modifier
+                        .size(48.dp)
+                        .clip(CircleShape)
+                        .background(
+                            brush = if (selectedTab == "shop") {
+                                Brush.linearGradient(
+                                    colors = listOf(Color(0xFF005B96), Color(0xFF011F4B)),
+                                    start = Offset(0f, 0f),
+                                    end = Offset(1000f, 1000f)
+                                )
+                            } else {
+                                Brush.linearGradient(
+                                    colors = listOf(Color.Transparent, Color.Transparent)
+                                )
+                            }
+                        )
                         .clickable(
                             indication = null,
                             interactionSource = remember { MutableInteractionSource() }
                         ) {
+                            selectedTab = "shop"
                             onShopClick()
-                        }
-                        .size(28.dp))
-                Icon(
-                    painter = painterResource(R.drawable.ic_profile),
-                    contentDescription = "Profile",
+                        },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_shop),
+                        contentDescription = "Shop",
+                        tint = if (selectedTab == "shop") Color.White else Color(0xFF9E9E9E),
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
+                Box(
                     modifier = Modifier
+                        .size(48.dp)
+                        .clip(CircleShape)
+                        .background(
+                            brush = if (selectedTab == "profile") {
+                                Brush.linearGradient(
+                                    colors = listOf(Color(0xFF005B96), Color(0xFF011F4B)),
+                                    start = Offset(0f, 0f),
+                                    end = Offset(1000f, 1000f)
+                                )
+                            } else {
+                                Brush.linearGradient(
+                                    colors = listOf(Color.Transparent, Color.Transparent)
+                                )
+                            }
+                        )
                         .clickable(
                             indication = null,
                             interactionSource = remember { MutableInteractionSource() }
                         ) {
+                            selectedTab = "profile"
                             onProfileClick()
-                        }
-                        .size(28.dp))
+                        },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_profile),
+                        contentDescription = "Profile",
+                        tint = if (selectedTab == "profile") Color.White else Color(0xFF9E9E9E),
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
             }
         }
     ) { innerPadding ->
@@ -3803,6 +3914,7 @@ fun TrendingNow(
 ) {
     var search by remember { mutableStateOf("") }
     val context = LocalContext.current
+    var selectedTab by remember { mutableStateOf("trending now") }
     val mainVerticalScrollState = rememberScrollState()
 
     Scaffold(
@@ -3823,61 +3935,171 @@ fun TrendingNow(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Icon(
-                    painter = painterResource(R.drawable.ic_home),
-                    contentDescription = "Home",
+                Box(
                     modifier = Modifier
+                        .size(48.dp)
+                        .clip(CircleShape)
+                        .background(
+                            brush = if (selectedTab == "home") {
+                                Brush.linearGradient(
+                                    colors = listOf(Color(0xFF005B96), Color(0xFF011F4B)),
+                                    start = Offset(0f, 0f),
+                                    end = Offset(1000f, 1000f)
+                                )
+                            } else {
+                                Brush.linearGradient(
+                                    colors = listOf(Color.Transparent, Color.Transparent)
+                                )
+                            }
+                        )
                         .clickable(
                             indication = null,
                             interactionSource = remember { MutableInteractionSource() }
                         ) {
+                            selectedTab = "home"
                             onHomeClick()
-                        }
-                        .size(28.dp))
-                Icon(
-                    painter = painterResource(R.drawable.ic_color_matcher),
-                    contentDescription = "Search",
+                        },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_home),
+                        contentDescription = "Home",
+                        tint = if (selectedTab == "home") Color.White else Color(0xFF9E9E9E),
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
+                Box(
                     modifier = Modifier
+                        .size(48.dp)
+                        .clip(CircleShape)
+                        .background(
+                            brush = if (selectedTab == "color_matcher") {
+                                Brush.linearGradient(
+                                    colors = listOf(Color(0xFF005B96), Color(0xFF011F4B)),
+                                    start = Offset(0f, 0f),
+                                    end = Offset(1000f, 1000f)
+                                )
+                            } else {
+                                Brush.linearGradient(
+                                    colors = listOf(Color.Transparent, Color.Transparent)
+                                )
+                            }
+                        )
                         .clickable(
                             indication = null,
                             interactionSource = remember { MutableInteractionSource() }
                         ) {
+                            selectedTab = "color_matcher"
                             onColorMatcherClick()
-                        }
-                        .size(28.dp))
-                Icon(
-                    painter = painterResource(R.drawable.ic_categories),
-                    contentDescription = "Document",
+                        },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_color_matcher),
+                        contentDescription = "Search",
+                        tint = if (selectedTab == "color_matcher") Color.White else Color(0xFF9E9E9E),
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
+                Box(
                     modifier = Modifier
+                        .size(48.dp)
+                        .clip(CircleShape)
+                        .background(
+                            brush = if (selectedTab == "trending now") {
+                                Brush.linearGradient(
+                                    colors = listOf(Color(0xFF005B96), Color(0xFF011F4B)),
+                                    start = Offset(0f, 0f),
+                                    end = Offset(1000f, 1000f)
+                                )
+                            } else {
+                                Brush.linearGradient(
+                                    colors = listOf(Color.Transparent, Color.Transparent)
+                                )
+                            }
+                        )
                         .clickable(
                             indication = null,
                             interactionSource = remember { MutableInteractionSource() }
                         ) {
+                            selectedTab = "categories"
                             onCategoriesClick()
-                        }
-                        .size(28.dp))
-                Icon(
-                    painter = painterResource(R.drawable.ic_shop),
-                    contentDescription = "Shop",
+                        },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_categories),
+                        contentDescription = "Document",
+                        tint = if (selectedTab == "categories") Color.White else Color(0xFF9E9E9E),
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
+                Box(
                     modifier = Modifier
+                        .size(48.dp)
+                        .clip(CircleShape)
+                        .background(
+                            brush = if (selectedTab == "shop") {
+                                Brush.linearGradient(
+                                    colors = listOf(Color(0xFF005B96), Color(0xFF011F4B)),
+                                    start = Offset(0f, 0f),
+                                    end = Offset(1000f, 1000f)
+                                )
+                            } else {
+                                Brush.linearGradient(
+                                    colors = listOf(Color.Transparent, Color.Transparent)
+                                )
+                            }
+                        )
                         .clickable(
                             indication = null,
                             interactionSource = remember { MutableInteractionSource() }
                         ) {
+                            selectedTab = "shop"
                             onShopClick()
-                        }
-                        .size(28.dp))
-                Icon(
-                    painter = painterResource(R.drawable.ic_profile),
-                    contentDescription = "Profile",
+                        },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_shop),
+                        contentDescription = "Shop",
+                        tint = if (selectedTab == "shop") Color.White else Color(0xFF9E9E9E),
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
+                Box(
                     modifier = Modifier
+                        .size(48.dp)
+                        .clip(CircleShape)
+                        .background(
+                            brush = if (selectedTab == "profile") {
+                                Brush.linearGradient(
+                                    colors = listOf(Color(0xFF005B96), Color(0xFF011F4B)),
+                                    start = Offset(0f, 0f),
+                                    end = Offset(1000f, 1000f)
+                                )
+                            } else {
+                                Brush.linearGradient(
+                                    colors = listOf(Color.Transparent, Color.Transparent)
+                                )
+                            }
+                        )
                         .clickable(
                             indication = null,
                             interactionSource = remember { MutableInteractionSource() }
                         ) {
+                            selectedTab = "profile"
                             onProfileClick()
-                        }
-                        .size(28.dp))
+                        },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_profile),
+                        contentDescription = "Profile",
+                        tint = if (selectedTab == "profile") Color.White else Color(0xFF9E9E9E),
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
             }
         }
     ) { innerPadding ->
@@ -4210,6 +4432,7 @@ fun Categories(
     val formalbottomsScrollState = rememberScrollState()
     val shoeScrollState = rememberScrollState()
     val accessoriesScrollState = rememberScrollState()
+    var selectedTab by remember { mutableStateOf("categories") }
 
     Scaffold(
 
@@ -4229,61 +4452,171 @@ fun Categories(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Icon(
-                    painter = painterResource(R.drawable.ic_home),
-                    contentDescription = "Home",
+                Box(
                     modifier = Modifier
+                        .size(48.dp)
+                        .clip(CircleShape)
+                        .background(
+                            brush = if (selectedTab == "home") {
+                                Brush.linearGradient(
+                                    colors = listOf(Color(0xFF005B96), Color(0xFF011F4B)),
+                                    start = Offset(0f, 0f),
+                                    end = Offset(1000f, 1000f)
+                                )
+                            } else {
+                                Brush.linearGradient(
+                                    colors = listOf(Color.Transparent, Color.Transparent)
+                                )
+                            }
+                        )
                         .clickable(
                             indication = null,
                             interactionSource = remember { MutableInteractionSource() }
                         ) {
+                            selectedTab = "home"
                             onHomeClick()
-                        }
-                        .size(28.dp))
-                Icon(
-                    painter = painterResource(R.drawable.ic_color_matcher),
-                    contentDescription = "Search",
+                        },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_home),
+                        contentDescription = "Home",
+                        tint = if (selectedTab == "home") Color.White else Color(0xFF9E9E9E),
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
+                Box(
                     modifier = Modifier
+                        .size(48.dp)
+                        .clip(CircleShape)
+                        .background(
+                            brush = if (selectedTab == "color_matcher") {
+                                Brush.linearGradient(
+                                    colors = listOf(Color(0xFF005B96), Color(0xFF011F4B)),
+                                    start = Offset(0f, 0f),
+                                    end = Offset(1000f, 1000f)
+                                )
+                            } else {
+                                Brush.linearGradient(
+                                    colors = listOf(Color.Transparent, Color.Transparent)
+                                )
+                            }
+                        )
                         .clickable(
                             indication = null,
                             interactionSource = remember { MutableInteractionSource() }
                         ) {
+                            selectedTab = "color_matcher"
                             onColorMatcherClick()
-                        }
-                        .size(28.dp))
-                Icon(
-                    painter = painterResource(R.drawable.ic_categories),
-                    contentDescription = "Document",
+                        },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_color_matcher),
+                        contentDescription = "Search",
+                        tint = if (selectedTab == "color_matcher") Color.White else Color(0xFF9E9E9E),
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
+                Box(
                     modifier = Modifier
+                        .size(48.dp)
+                        .clip(CircleShape)
+                        .background(
+                            brush = if (selectedTab == "trending now") {
+                                Brush.linearGradient(
+                                    colors = listOf(Color(0xFF005B96), Color(0xFF011F4B)),
+                                    start = Offset(0f, 0f),
+                                    end = Offset(1000f, 1000f)
+                                )
+                            } else {
+                                Brush.linearGradient(
+                                    colors = listOf(Color.Transparent, Color.Transparent)
+                                )
+                            }
+                        )
                         .clickable(
                             indication = null,
                             interactionSource = remember { MutableInteractionSource() }
                         ) {
+                            selectedTab = "categories"
                             onCategoriesClick()
-                        }
-                        .size(28.dp))
-                Icon(
-                    painter = painterResource(R.drawable.ic_shop),
-                    contentDescription = "Shop",
+                        },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_categories),
+                        contentDescription = "Document",
+                        tint = if (selectedTab == "categories") Color.White else Color(0xFF9E9E9E),
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
+                Box(
                     modifier = Modifier
+                        .size(48.dp)
+                        .clip(CircleShape)
+                        .background(
+                            brush = if (selectedTab == "shop") {
+                                Brush.linearGradient(
+                                    colors = listOf(Color(0xFF005B96), Color(0xFF011F4B)),
+                                    start = Offset(0f, 0f),
+                                    end = Offset(1000f, 1000f)
+                                )
+                            } else {
+                                Brush.linearGradient(
+                                    colors = listOf(Color.Transparent, Color.Transparent)
+                                )
+                            }
+                        )
                         .clickable(
                             indication = null,
                             interactionSource = remember { MutableInteractionSource() }
                         ) {
+                            selectedTab = "shop"
                             onShopClick()
-                        }
-                        .size(28.dp))
-                Icon(
-                    painter = painterResource(R.drawable.ic_profile),
-                    contentDescription = "Profile",
+                        },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_shop),
+                        contentDescription = "Shop",
+                        tint = if (selectedTab == "shop") Color.White else Color(0xFF9E9E9E),
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
+                Box(
                     modifier = Modifier
+                        .size(48.dp)
+                        .clip(CircleShape)
+                        .background(
+                            brush = if (selectedTab == "profile") {
+                                Brush.linearGradient(
+                                    colors = listOf(Color(0xFF005B96), Color(0xFF011F4B)),
+                                    start = Offset(0f, 0f),
+                                    end = Offset(1000f, 1000f)
+                                )
+                            } else {
+                                Brush.linearGradient(
+                                    colors = listOf(Color.Transparent, Color.Transparent)
+                                )
+                            }
+                        )
                         .clickable(
                             indication = null,
                             interactionSource = remember { MutableInteractionSource() }
                         ) {
+                            selectedTab = "profile"
                             onProfileClick()
-                        }
-                        .size(28.dp))
+                        },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_profile),
+                        contentDescription = "Profile",
+                        tint = if (selectedTab == "profile") Color.White else Color(0xFF9E9E9E),
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
             }
         }
     ) { innerPadding ->
@@ -4625,8 +4958,10 @@ fun DisplayFashion(
 ) {
 
     val context = LocalContext.current
+    var selectedTab by remember { mutableStateOf("shop") }
 
     Scaffold(
+
         bottomBar = {
             Row(
                 modifier = Modifier
@@ -4643,67 +4978,171 @@ fun DisplayFashion(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Icon(
-                    painter = painterResource(R.drawable.ic_home),
-                    contentDescription = "Home",
+                Box(
                     modifier = Modifier
-                        .size(28.dp)
-                        .clickable(
-                            indication = null,
-                            interactionSource = remember { MutableInteractionSource() }
-                        ) {
-                            onHomeClick()
-                        }
-                )
-
-                Icon(
-                    painter = painterResource(R.drawable.ic_color_matcher),
-                    contentDescription = "Color Matcher",
-                    modifier = Modifier
-                        .size(28.dp)
-                        .clickable(
-                            indication = null,
-                            interactionSource = remember { MutableInteractionSource() }
-                        ) {
-                            onColorMatcherClick()
-                        }
-                )
-
-                Icon(
-                    painter = painterResource(R.drawable.ic_categories),
-                    contentDescription = "Categories",
-                    modifier = Modifier
-                        .size(28.dp)
-                        .clickable(
-                            indication = null,
-                            interactionSource = remember { MutableInteractionSource() }
-                        ) { onCategoriesClick() }
-                )
-
-                Icon(
-                    painter = painterResource(R.drawable.ic_shop),
-                    contentDescription = "Shop",
-                    modifier = Modifier
-                        .size(28.dp)
-                        .clickable(
-                            indication = null,
-                            interactionSource = remember { MutableInteractionSource() }
-                        ) {
-                            onShopClick()
-                        }
-                )
-
-                Icon(
-                    painter = painterResource(R.drawable.ic_profile),
-                    contentDescription = "Profile",
-                    modifier = Modifier
-                        .size(28.dp)
-                        .clickable(
-                            indication = null,
-                            interactionSource = remember { MutableInteractionSource() }
+                        .size(48.dp)
+                        .clip(CircleShape)
+                        .background(
+                            brush = if (selectedTab == "home") {
+                                Brush.linearGradient(
+                                    colors = listOf(Color(0xFF005B96), Color(0xFF011F4B)),
+                                    start = Offset(0f, 0f),
+                                    end = Offset(1000f, 1000f)
+                                )
+                            } else {
+                                Brush.linearGradient(
+                                    colors = listOf(Color.Transparent, Color.Transparent)
+                                )
+                            }
                         )
-                        { onProfileClick() }
-                )
+                        .clickable(
+                            indication = null,
+                            interactionSource = remember { MutableInteractionSource() }
+                        ) {
+                            selectedTab = "home"
+                            onHomeClick()
+                        },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_home),
+                        contentDescription = "Home",
+                        tint = if (selectedTab == "home") Color.White else Color(0xFF9E9E9E),
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
+                Box(
+                    modifier = Modifier
+                        .size(48.dp)
+                        .clip(CircleShape)
+                        .background(
+                            brush = if (selectedTab == "color_matcher") {
+                                Brush.linearGradient(
+                                    colors = listOf(Color(0xFF005B96), Color(0xFF011F4B)),
+                                    start = Offset(0f, 0f),
+                                    end = Offset(1000f, 1000f)
+                                )
+                            } else {
+                                Brush.linearGradient(
+                                    colors = listOf(Color.Transparent, Color.Transparent)
+                                )
+                            }
+                        )
+                        .clickable(
+                            indication = null,
+                            interactionSource = remember { MutableInteractionSource() }
+                        ) {
+                            selectedTab = "color_matcher"
+                            onColorMatcherClick()
+                        },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_color_matcher),
+                        contentDescription = "Search",
+                        tint = if (selectedTab == "color_matcher") Color.White else Color(0xFF9E9E9E),
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
+                Box(
+                    modifier = Modifier
+                        .size(48.dp)
+                        .clip(CircleShape)
+                        .background(
+                            brush = if (selectedTab == "trending now") {
+                                Brush.linearGradient(
+                                    colors = listOf(Color(0xFF005B96), Color(0xFF011F4B)),
+                                    start = Offset(0f, 0f),
+                                    end = Offset(1000f, 1000f)
+                                )
+                            } else {
+                                Brush.linearGradient(
+                                    colors = listOf(Color.Transparent, Color.Transparent)
+                                )
+                            }
+                        )
+                        .clickable(
+                            indication = null,
+                            interactionSource = remember { MutableInteractionSource() }
+                        ) {
+                            selectedTab = "categories"
+                            onCategoriesClick()
+                        },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_categories),
+                        contentDescription = "Document",
+                        tint = if (selectedTab == "categories") Color.White else Color(0xFF9E9E9E),
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
+                Box(
+                    modifier = Modifier
+                        .size(48.dp)
+                        .clip(CircleShape)
+                        .background(
+                            brush = if (selectedTab == "shop") {
+                                Brush.linearGradient(
+                                    colors = listOf(Color(0xFF005B96), Color(0xFF011F4B)),
+                                    start = Offset(0f, 0f),
+                                    end = Offset(1000f, 1000f)
+                                )
+                            } else {
+                                Brush.linearGradient(
+                                    colors = listOf(Color.Transparent, Color.Transparent)
+                                )
+                            }
+                        )
+                        .clickable(
+                            indication = null,
+                            interactionSource = remember { MutableInteractionSource() }
+                        ) {
+                            selectedTab = "shop"
+                            onShopClick()
+                        },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_shop),
+                        contentDescription = "Shop",
+                        tint = if (selectedTab == "shop") Color.White else Color(0xFF9E9E9E),
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
+                Box(
+                    modifier = Modifier
+                        .size(48.dp)
+                        .clip(CircleShape)
+                        .background(
+                            brush = if (selectedTab == "profile") {
+                                Brush.linearGradient(
+                                    colors = listOf(Color(0xFF005B96), Color(0xFF011F4B)),
+                                    start = Offset(0f, 0f),
+                                    end = Offset(1000f, 1000f)
+                                )
+                            } else {
+                                Brush.linearGradient(
+                                    colors = listOf(Color.Transparent, Color.Transparent)
+                                )
+                            }
+                        )
+                        .clickable(
+                            indication = null,
+                            interactionSource = remember { MutableInteractionSource() }
+                        ) {
+                            selectedTab = "profile"
+                            onProfileClick()
+                        },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_profile),
+                        contentDescription = "Profile",
+                        tint = if (selectedTab == "profile") Color.White else Color(0xFF9E9E9E),
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
             }
         }
     ) { innerPadding ->
@@ -4846,6 +5285,7 @@ fun PartnerShop(
     onProfileClick: () -> Unit = {}
 ) {
     val context = LocalContext.current
+    var selectedTab by remember { mutableStateOf("shop") }
 
     val shopList = listOf(
         PartnerShopData(
@@ -4872,6 +5312,7 @@ fun PartnerShop(
     )
 
     Scaffold(
+
         bottomBar = {
             Row(
                 modifier = Modifier
@@ -4888,62 +5329,171 @@ fun PartnerShop(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Icon(
-                    painter = painterResource(R.drawable.ic_home),
-                    contentDescription = "Home",
+                Box(
                     modifier = Modifier
-                        .size(28.dp)
-                        .clickable(
-                            indication = null,
-                            interactionSource = remember { MutableInteractionSource() }
-                        ) { onHomeClick() }
-                )
-
-                Icon(
-                    painter = painterResource(R.drawable.ic_color_matcher),
-                    contentDescription = "Color Matcher",
-                    modifier = Modifier
-                        .size(28.dp)
-                        .clickable(
-                            indication = null,
-                            interactionSource = remember { MutableInteractionSource() }
-                        ) { onColorMatcherClick() }
-                )
-
-                Icon(
-                    painter = painterResource(R.drawable.ic_categories),
-                    contentDescription = "Categories",
-                    modifier = Modifier
-                        .size(28.dp)
-                        .clickable(
-                            indication = null,
-                            interactionSource = remember { MutableInteractionSource() }
-                        ) { onCategoriesClick() }
-                )
-
-                Icon(
-                    painter = painterResource(R.drawable.ic_shop),
-                    contentDescription = "Shop",
-                    modifier = Modifier
-                        .size(28.dp)
+                        .size(48.dp)
+                        .clip(CircleShape)
+                        .background(
+                            brush = if (selectedTab == "home") {
+                                Brush.linearGradient(
+                                    colors = listOf(Color(0xFF005B96), Color(0xFF011F4B)),
+                                    start = Offset(0f, 0f),
+                                    end = Offset(1000f, 1000f)
+                                )
+                            } else {
+                                Brush.linearGradient(
+                                    colors = listOf(Color.Transparent, Color.Transparent)
+                                )
+                            }
+                        )
                         .clickable(
                             indication = null,
                             interactionSource = remember { MutableInteractionSource() }
                         ) {
-                            onShopClick()
-                        }
-                )
-
-                Icon(
-                    painter = painterResource(R.drawable.ic_profile),
-                    contentDescription = "Profile",
+                            selectedTab = "home"
+                            onHomeClick()
+                        },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_home),
+                        contentDescription = "Home",
+                        tint = if (selectedTab == "home") Color.White else Color(0xFF9E9E9E),
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
+                Box(
                     modifier = Modifier
-                        .size(28.dp)
+                        .size(48.dp)
+                        .clip(CircleShape)
+                        .background(
+                            brush = if (selectedTab == "color_matcher") {
+                                Brush.linearGradient(
+                                    colors = listOf(Color(0xFF005B96), Color(0xFF011F4B)),
+                                    start = Offset(0f, 0f),
+                                    end = Offset(1000f, 1000f)
+                                )
+                            } else {
+                                Brush.linearGradient(
+                                    colors = listOf(Color.Transparent, Color.Transparent)
+                                )
+                            }
+                        )
                         .clickable(
                             indication = null,
                             interactionSource = remember { MutableInteractionSource() }
-                        ) { onProfileClick() }
-                )
+                        ) {
+                            selectedTab = "color_matcher"
+                            onColorMatcherClick()
+                        },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_color_matcher),
+                        contentDescription = "Search",
+                        tint = if (selectedTab == "color_matcher") Color.White else Color(0xFF9E9E9E),
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
+                Box(
+                    modifier = Modifier
+                        .size(48.dp)
+                        .clip(CircleShape)
+                        .background(
+                            brush = if (selectedTab == "trending now") {
+                                Brush.linearGradient(
+                                    colors = listOf(Color(0xFF005B96), Color(0xFF011F4B)),
+                                    start = Offset(0f, 0f),
+                                    end = Offset(1000f, 1000f)
+                                )
+                            } else {
+                                Brush.linearGradient(
+                                    colors = listOf(Color.Transparent, Color.Transparent)
+                                )
+                            }
+                        )
+                        .clickable(
+                            indication = null,
+                            interactionSource = remember { MutableInteractionSource() }
+                        ) {
+                            selectedTab = "categories"
+                            onCategoriesClick()
+                        },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_categories),
+                        contentDescription = "Document",
+                        tint = if (selectedTab == "categories") Color.White else Color(0xFF9E9E9E),
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
+                Box(
+                    modifier = Modifier
+                        .size(48.dp)
+                        .clip(CircleShape)
+                        .background(
+                            brush = if (selectedTab == "shop") {
+                                Brush.linearGradient(
+                                    colors = listOf(Color(0xFF005B96), Color(0xFF011F4B)),
+                                    start = Offset(0f, 0f),
+                                    end = Offset(1000f, 1000f)
+                                )
+                            } else {
+                                Brush.linearGradient(
+                                    colors = listOf(Color.Transparent, Color.Transparent)
+                                )
+                            }
+                        )
+                        .clickable(
+                            indication = null,
+                            interactionSource = remember { MutableInteractionSource() }
+                        ) {
+                            selectedTab = "shop"
+                            onShopClick()
+                        },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_shop),
+                        contentDescription = "Shop",
+                        tint = if (selectedTab == "shop") Color.White else Color(0xFF9E9E9E),
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
+                Box(
+                    modifier = Modifier
+                        .size(48.dp)
+                        .clip(CircleShape)
+                        .background(
+                            brush = if (selectedTab == "profile") {
+                                Brush.linearGradient(
+                                    colors = listOf(Color(0xFF005B96), Color(0xFF011F4B)),
+                                    start = Offset(0f, 0f),
+                                    end = Offset(1000f, 1000f)
+                                )
+                            } else {
+                                Brush.linearGradient(
+                                    colors = listOf(Color.Transparent, Color.Transparent)
+                                )
+                            }
+                        )
+                        .clickable(
+                            indication = null,
+                            interactionSource = remember { MutableInteractionSource() }
+                        ) {
+                            selectedTab = "profile"
+                            onProfileClick()
+                        },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_profile),
+                        contentDescription = "Profile",
+                        tint = if (selectedTab == "profile") Color.White else Color(0xFF9E9E9E),
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
             }
         }
     ) { innerPadding ->
@@ -5140,6 +5690,7 @@ fun MyVoucher(
 
     val context = LocalContext.current
     var isProgressTabActive by remember { mutableStateOf(false) }
+    var selectedTab by remember { mutableStateOf("shop") }
 
     val activeRewardsList = remember {
         listOf(
@@ -5188,6 +5739,7 @@ fun MyVoucher(
     }
 
     Scaffold(
+
         bottomBar = {
             Row(
                 modifier = Modifier
@@ -5204,53 +5756,174 @@ fun MyVoucher(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Icon(
-                    painter = painterResource(R.drawable.ic_home),
-                    contentDescription = "Home",
+                Box(
                     modifier = Modifier
-                        .size(28.dp)
-                        .clickable(
-                            indication = null,
-                            interactionSource = remember { MutableInteractionSource() }) { onHomeClick() })
-                Icon(
-                    painter = painterResource(R.drawable.ic_color_matcher),
-                    contentDescription = "Color Matcher",
-                    modifier = Modifier
-                        .size(28.dp)
-                        .clickable(
-                            indication = null,
-                            interactionSource = remember { MutableInteractionSource() }) { onColorMatcherClick() })
-                Icon(
-                    painter = painterResource(R.drawable.ic_categories),
-                    contentDescription = "Categories",
-                    modifier = Modifier
-                        .size(28.dp)
-                        .clickable(
-                            indication = null,
-                            interactionSource = remember { MutableInteractionSource() }) { onCategoriesClick() })
-                Icon(
-                    painter = painterResource(R.drawable.ic_shop),
-                    contentDescription = "Shop",
-                    modifier = Modifier
-                        .size(28.dp)
+                        .size(48.dp)
+                        .clip(CircleShape)
+                        .background(
+                            brush = if (selectedTab == "home") {
+                                Brush.linearGradient(
+                                    colors = listOf(Color(0xFF005B96), Color(0xFF011F4B)),
+                                    start = Offset(0f, 0f),
+                                    end = Offset(1000f, 1000f)
+                                )
+                            } else {
+                                Brush.linearGradient(
+                                    colors = listOf(Color.Transparent, Color.Transparent)
+                                )
+                            }
+                        )
                         .clickable(
                             indication = null,
                             interactionSource = remember { MutableInteractionSource() }
                         ) {
-                            onShopClick()
-                        }
-                )
-                Icon(
-                    painter = painterResource(R.drawable.ic_profile),
-                    contentDescription = "Profile",
+                            selectedTab = "home"
+                            onHomeClick()
+                        },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_home),
+                        contentDescription = "Home",
+                        tint = if (selectedTab == "home") Color.White else Color(0xFF9E9E9E),
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
+                Box(
                     modifier = Modifier
-                        .size(28.dp)
+                        .size(48.dp)
+                        .clip(CircleShape)
+                        .background(
+                            brush = if (selectedTab == "color_matcher") {
+                                Brush.linearGradient(
+                                    colors = listOf(Color(0xFF005B96), Color(0xFF011F4B)),
+                                    start = Offset(0f, 0f),
+                                    end = Offset(1000f, 1000f)
+                                )
+                            } else {
+                                Brush.linearGradient(
+                                    colors = listOf(Color.Transparent, Color.Transparent)
+                                )
+                            }
+                        )
                         .clickable(
                             indication = null,
-                            interactionSource = remember { MutableInteractionSource() }) { onProfileClick() })
+                            interactionSource = remember { MutableInteractionSource() }
+                        ) {
+                            selectedTab = "color_matcher"
+                            onColorMatcherClick()
+                        },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_color_matcher),
+                        contentDescription = "Search",
+                        tint = if (selectedTab == "color_matcher") Color.White else Color(0xFF9E9E9E),
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
+                Box(
+                    modifier = Modifier
+                        .size(48.dp)
+                        .clip(CircleShape)
+                        .background(
+                            brush = if (selectedTab == "trending now") {
+                                Brush.linearGradient(
+                                    colors = listOf(Color(0xFF005B96), Color(0xFF011F4B)),
+                                    start = Offset(0f, 0f),
+                                    end = Offset(1000f, 1000f)
+                                )
+                            } else {
+                                Brush.linearGradient(
+                                    colors = listOf(Color.Transparent, Color.Transparent)
+                                )
+                            }
+                        )
+                        .clickable(
+                            indication = null,
+                            interactionSource = remember { MutableInteractionSource() }
+                        ) {
+                            selectedTab = "categories"
+                            onCategoriesClick()
+                        },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_categories),
+                        contentDescription = "Document",
+                        tint = if (selectedTab == "categories") Color.White else Color(0xFF9E9E9E),
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
+                Box(
+                    modifier = Modifier
+                        .size(48.dp)
+                        .clip(CircleShape)
+                        .background(
+                            brush = if (selectedTab == "shop") {
+                                Brush.linearGradient(
+                                    colors = listOf(Color(0xFF005B96), Color(0xFF011F4B)),
+                                    start = Offset(0f, 0f),
+                                    end = Offset(1000f, 1000f)
+                                )
+                            } else {
+                                Brush.linearGradient(
+                                    colors = listOf(Color.Transparent, Color.Transparent)
+                                )
+                            }
+                        )
+                        .clickable(
+                            indication = null,
+                            interactionSource = remember { MutableInteractionSource() }
+                        ) {
+                            selectedTab = "shop"
+                            onShopClick()
+                        },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_shop),
+                        contentDescription = "Shop",
+                        tint = if (selectedTab == "shop") Color.White else Color(0xFF9E9E9E),
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
+                Box(
+                    modifier = Modifier
+                        .size(48.dp)
+                        .clip(CircleShape)
+                        .background(
+                            brush = if (selectedTab == "profile") {
+                                Brush.linearGradient(
+                                    colors = listOf(Color(0xFF005B96), Color(0xFF011F4B)),
+                                    start = Offset(0f, 0f),
+                                    end = Offset(1000f, 1000f)
+                                )
+                            } else {
+                                Brush.linearGradient(
+                                    colors = listOf(Color.Transparent, Color.Transparent)
+                                )
+                            }
+                        )
+                        .clickable(
+                            indication = null,
+                            interactionSource = remember { MutableInteractionSource() }
+                        ) {
+                            selectedTab = "profile"
+                            onProfileClick()
+                        },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_profile),
+                        contentDescription = "Profile",
+                        tint = if (selectedTab == "profile") Color.White else Color(0xFF9E9E9E),
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
             }
         }
-    ) { innerPadding ->
+    ){ innerPadding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
